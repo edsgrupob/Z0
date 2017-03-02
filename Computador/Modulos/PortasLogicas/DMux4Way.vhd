@@ -16,8 +16,8 @@ begin
 	not_s0 <= not sel(0);
 	not_s1 <= not sel(1);
 	q0 <= not_s0 and not_s1 and a;
-	q1 <= not_s0 and sel(1) and a;
-	q2 <= sel(0) and not_s1 and a;
+	q1 <= sel(0) and not_s1 and a;
+	q2 <= not_s0 and sel(1) and a;
 	q3 <= sel(0) and  sel(1) and a;
 end ;
 
