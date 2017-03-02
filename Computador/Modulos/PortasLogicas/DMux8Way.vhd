@@ -28,4 +28,4 @@ begin
 	q5 <= sel(0) and not_s1 and sel(2) and a;
 	q6 <= not_s0 and sel(1) and sel(2) and a;
 	q7 <= sel(0) and sel(1) and sel(2) and a;
-end
+end ;

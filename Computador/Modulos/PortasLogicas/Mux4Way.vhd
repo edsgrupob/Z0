@@ -20,5 +20,4 @@ begin
 	third <= c and not_s0 and sel(1);
 	fourth <= d and sel(0) and sel(1);
 	q <= first or second or third or fourth;
-end
-
+end ;

@@ -14,4 +14,4 @@ begin
 	not_sel <= not sel;
 	q0 <= a and not_sel;
 	q1 <= a and sel;
-end
+end ;

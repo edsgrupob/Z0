@@ -15,4 +15,4 @@ begin
 	first <= a and sel_not;
 	second <= b and sel;
 	q <= first or second;
-end
+end ;
