@@ -8,8 +8,6 @@ entity Not16 is
 end entity;
 
 architecture arch_not16 of Not16 is
-	port (a: in STD_LOGIC;
-	      q: out STD_LOGIC);
 
 begin
 	q <= not a;
