@@ -16,5 +16,5 @@ begin
 	a_b_and <= a and b;
 	abxor_c_and <= a_b_xor and c;
 	soma <= a_b_xor xor c;
-	carry <= abxor_c_and or a_b_and;
+	vaium	 <= abxor_c_and or a_b_and;
 end architecture;	
