@@ -8,7 +8,7 @@ entity And16 is
 			q:   out STD_LOGIC_VECTOR(15 downto 0));
 end entity;
 
-architecture arch_and16 of chip_and16 is component chip_and16
+architecture arch_and16 of And16 is component chip_and16
 	port (a,b: in STD_LOGIC;
 	      q: out STD_LOGIC);
 end component;
