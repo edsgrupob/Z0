@@ -20,11 +20,12 @@ end component;
 
 signal w1,w2,w3,w4,w5,w6: STD_LOGIC;
 begin
-	w1 <= a nor b;
-	w2 <= c nor d;
-	w3 <= e nor f;
-	w4 <= g nor h;
-	w5 <= w1 nor w2;
-	w6 <= w3 nor w4; 
-	q <= w5 nor w6;
+	w1 <= a or b;
+	w2 <= c or d;
+	w3 <= e or f;
+	w4 <= g or h;
+	w5 <= w1 or w2;
+	w6 <= w3 or w4; 
+	q <= not(w5 or w6);
+
 end architecture;
