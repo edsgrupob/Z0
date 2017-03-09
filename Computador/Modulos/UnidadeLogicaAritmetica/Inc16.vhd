@@ -20,26 +20,26 @@ component HalfAdder is
 	);
 end component;
 
-signal carry : STD_LOGIC;
+signal carry_flip, carry_flop : STD_LOGIC;
 begin
 
-    h0: HalfAdder port map (a(0),'1',a(0),carry);
-    h1: HalfAdder port map (a(1),carry,a(1),carry);
-    h2: HalfAdder port map (a(2),carry,a(2),carry);
-    h3: HalfAdder port map (a(3),carry,a(3),carry);
+    h0: HalfAdder port map (a(0),'1',q(0),carry_flip);
+    h1: HalfAdder port map (a(1),carry_flip,q(1),carry_flop);
+    h2: HalfAdder port map (a(2),carry_flop,q(2),carry_flip);
+    h3: HalfAdder port map (a(3),carry_flip,q(3),carry_flop);
     
-    h4: HalfAdder port map (a(4),carry,a(4),carry);
-    h5: HalfAdder port map (a(5),carry,a(5),carry);
-    h6: HalfAdder port map (a(6),carry,a(6),carry);
-    h7: HalfAdder port map (a(7),carry,a(7),carry);
+    h4: HalfAdder port map (a(4),carry_flop,q(4),carry_flip);
+    h5: HalfAdder port map (a(5),carry_flip,q(5),carry_flop);
+    h6: HalfAdder port map (a(6),carry_flop,q(6),carry_flip);
+    h7: HalfAdder port map (a(7),carry_flip,q(7),carry_flop);
     
-    h8: HalfAdder port map (a(8),carry,a(8),carry);
-    h9: HalfAdder port map (a(9),carry,a(9),carry);
-    h10: HalfAdder port map (a(10),carry,a(10),carry);
-    h11: HalfAdder port map (a(11),carry,a(11),carry);
+    h8: HalfAdder port map (a(8),carry_flop,q(8),carry_flip);
+    h9: HalfAdder port map (a(9),carry_flip,q(9),carry_flop);
+    h10: HalfAdder port map (a(10),carry_flop,q(10),carry_flip);
+    h11: HalfAdder port map (a(11),carry_flip,q(11),carry_flop);
     
-    h12: HalfAdder port map (a(12),carry,a(12),carry);
-    h13: HalfAdder port map (a(13),carry,a(13),carry);
-    h14: HalfAdder port map (a(14),carry,a(14),carry);
-    h15: HalfAdder port map (a(15),carry,a(15),carry);
+    h12: HalfAdder port map (a(12),carry_flop,q(12),carry_flip);
+    h13: HalfAdder port map (a(13),carry_flip,q(13),carry_flop);
+    h14: HalfAdder port map (a(14),carry_flop,q(14),carry_flip);
+    h15: HalfAdder port map (a(15),carry_flip,q(15),carry_flop);
 end architecture;
