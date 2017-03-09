@@ -20,10 +20,11 @@ component HalfAdder is
 	);
 end component;
 
-signal carry_flip, carry_flop : STD_LOGIC;
+signal carry_flip : STD_LOGIC;
+signal carry_flop : STD_LOGIC := '0';
 begin
 
-    h0: HalfAdder port map (a(0),'1',q(0),carry_flip);
+    h0: HalfAdder port map (a(0),carry_flop,q(0),carry_flip);
     h1: HalfAdder port map (a(1),carry_flip,q(1),carry_flop);
     h2: HalfAdder port map (a(2),carry_flop,q(2),carry_flip);
     h3: HalfAdder port map (a(3),carry_flip,q(3),carry_flop);
