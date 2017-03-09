@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity Mux4Way16 is
-	port ( 
+	port (
 			a:   in  STD_LOGIC_VECTOR(15 downto 0);
 			b:   in  STD_LOGIC_VECTOR(15 downto 0);
 			c:   in  STD_LOGIC_VECTOR(15 downto 0);
@@ -10,3 +10,11 @@ entity Mux4Way16 is
 			sel: in  STD_LOGIC_VECTOR(1 downto 0);
 			q:   out STD_LOGIC_VECTOR(15 downto 0));
 end entity;
+
+architecture ChipMux4Way16 of Mux4way16 is
+begin
+	q <= a when (sel = "00") else
+		  b when (sel = "01") else
+		  c when (sel = "10") else
+		  d when (sel ="11") else a;
+end;

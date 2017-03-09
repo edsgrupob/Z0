@@ -8,3 +8,11 @@ entity Mux2Way is
 			sel: in  STD_LOGIC;
 			q:   out STD_LOGIC);
 end entity;
+architecture arch_Mux2Way of Mux2Way is
+signal sel_not, first, second : STD_LOGIC;
+begin
+	sel_not <= not sel;
+	first <= a and sel_not;
+	second <= b and sel;
+	q <= first or second;
+end ;
