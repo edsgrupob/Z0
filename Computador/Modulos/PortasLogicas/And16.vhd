@@ -29,4 +29,4 @@ begin
 	u14: chip_and16 port map (a(13),b(13),q(13));
 	u15: chip_and16 port map (a(14),b(14),q(14));
 	u16: chip_and16 port map (a(15),b(15),q(15));
-end architecture;
+end;
