@@ -14,3 +14,18 @@ entity DMux8Way is
 			q6:  out STD_LOGIC;
 			q7:  out STD_LOGIC);
 end entity;
+architecture arch_DMux8Way of DMux8Way is
+signal not_s0, not_s1, not_s2 : STD_LOGIC;
+begin
+	not_s0 <= not sel(0);
+	not_s1 <= not sel(1);
+	not_s2 <= not sel(2);
+	q0 <= not_s0 and not_s1 and not_s2 and a;
+	q1 <= sel(0) and not_s1 and not_s2 and a;
+	q2 <= not_s0 and sel(1) and not_s2 and a;
+	q3 <= sel(0) and sel(1) and not_s2 and a;
+	q4 <= not_s0 and not_s1 and sel(2) and a;
+	q5 <= sel(0) and not_s1 and sel(2) and a;
+	q6 <= not_s0 and sel(1) and sel(2) and a;
+	q7 <= sel(0) and sel(1) and sel(2) and a;
+end ;
