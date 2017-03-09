@@ -11,12 +11,12 @@ entity Inc16 is
 	);
 end entity;
 
-entity HalfAdder is
+component HalfAdder is
 	port(
 		a,b:         in STD_LOGIC;   -- entradas
 		soma,vaium: out STD_LOGIC   -- sum e carry
 	);
-end entity;
+end component;
 
 architecture arch_Inc16 of Inc16 is 
 signal carry : STD_LOGIC;
