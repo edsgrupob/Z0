@@ -11,6 +11,8 @@ entity Inc16 is
 	);
 end entity;
 
+architecture arch_Inc16 of Inc16 is
+
 component HalfAdder is
 	port(
 		a,b:         in STD_LOGIC;   -- entradas
@@ -18,7 +20,6 @@ component HalfAdder is
 	);
 end component;
 
-architecture arch_Inc16 of Inc16 is 
 signal carry : STD_LOGIC;
 begin
 
