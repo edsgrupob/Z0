@@ -32,11 +32,11 @@ signal c15:STD_LOGIC;
 
 component HalfAdder
 	port (a,b: in STD_LOGIC;
-	      s, c: out STD_LOGIC);
+	      soma, vaium: out STD_LOGIC);
 end component;
 component FullAdder
 	port (a, b, c: in STD_LOGIC;
-		  s, cr: out STD_LOGIC);
+		  soma, vaium: out STD_LOGIC);
 end component;
 begin
 	u1: HalfAdder port map (a(0), b(0), q(0), c0);
