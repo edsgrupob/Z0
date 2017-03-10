@@ -14,3 +14,26 @@ entity Mux8Way16 is
 			sel: in  STD_LOGIC_VECTOR(2 downto 0);
 			q:   out STD_LOGIC_VECTOR(15 downto 0));
 end entity;
+architecture arch_Mux8Way16 of Mux8Way16 is 
+begin
+process (a,b,c,d,f,g,h,sel)
+begin
+		if (sel = "000") then
+			q <= a;
+		elsif (sel = "001") then
+			q <= b;
+		elsif (sel = "010") then
+			q <= c;
+		elsif (sel = "011") then
+			q <= d;
+		elsif (sel = "100") then
+			q <= e;
+		elsif (sel = "101") then
+			q <= f;
+		elsif (sel = "110") then
+			q <= g;
+		elsif (sel = "111") then
+			q <= h;
+		end if;
+end process;
+end architecture;	
