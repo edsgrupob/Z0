@@ -14,6 +14,8 @@ entity BinaryDigit is
 	);
 end entity;
 architecture arch_BinaryDigit of BinaryDigit is
+	signal w1,w2: std_logic;
+	
 	component Mux2Way is
 		port ( 
 				a:   in  STD_LOGIC;
@@ -31,5 +33,10 @@ architecture arch_BinaryDigit of BinaryDigit is
 			q:     out std_logic);
 	end component;
 begin
-	
+
+	u1: FlipFlopD port map (clock, w1, '1', '1', w2);
+	u2: Mux2Way port map (w2, input, load, w1);
+	output <= w1;
 end architecture;
+
+
