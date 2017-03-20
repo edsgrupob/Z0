@@ -18,3 +18,21 @@ entity ShiftRegisterPIPO16 is
 		output:    out STD_LOGIC_VECTOR(15 downto 0)
 	);
 end entity;
+ 
+architecture arch of pipo is
+ 
+begin
+ 
+process (clock)
+
+begin
+ 
+If direction == 0 then 
+	out[t+1] = out[t] << 1
+	
+else 
+	out[t+1] = out[t] >> 1
+	
+end process;
+ 
+end arch;
