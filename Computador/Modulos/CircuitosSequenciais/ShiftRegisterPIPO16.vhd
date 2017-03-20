@@ -19,7 +19,7 @@ entity ShiftRegisterPIPO16 is
 	);
 end entity;
  
-architecture arch of pipo is
+architecture arch of ShiftRegisterPIPO16 is
  
 begin
  
