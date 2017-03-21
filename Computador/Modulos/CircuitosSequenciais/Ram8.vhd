@@ -22,6 +22,7 @@ architecture arch_Ram8 of Ram8 is
 begin
 
 	process(clock)
+	begin
 		if (clock'event and clock='1') then
 			if (load='1') then
 				ram_block(to_integer(unsigned(address))) <= input;
