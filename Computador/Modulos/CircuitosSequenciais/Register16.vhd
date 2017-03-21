@@ -14,7 +14,7 @@ entity Register16 is
 	);
 end entity;
 
-architecture chip_Register16 of Register16 is
+architecture arch_Register16 of Register16 is
 
 component Register8 is
 	port(
