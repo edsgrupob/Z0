@@ -4,7 +4,7 @@
 
 Library ieee; 
 use ieee.std_logic_1164.all;
-use ieee.std_logic_unsigned.all;
+use ieee.numeric_std.all;
   
 entity Ram8 is
 	port(
@@ -25,9 +25,9 @@ begin
 	process(clock)
 	begin
 		if (clock'event and clock='1' and load='1') then
-				signal_ram(conv_integer(address)) <= input;
+				signal_ram(to_integer(unsigned(address))) <= input;
 		end if;
 	end process;
-	output <= signal_ram(conv_integer(address));
+	output <= signal_ram(to_integer(unsigned(address)));
 
 end architecture;
