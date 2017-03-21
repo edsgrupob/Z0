@@ -26,7 +26,6 @@ begin
 	begin
 		if (clock'event and clock='1' and load='1') then
 				signal_ram(conv_integer(address)) <= input;
-			end if;
 		end if;
 	end process;
 	output <= signal_ram(conv_integer(address));
