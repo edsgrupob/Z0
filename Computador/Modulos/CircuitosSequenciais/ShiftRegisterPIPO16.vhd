@@ -19,20 +19,3 @@ entity ShiftRegisterPIPO16 is
 	);
 end entity;
  
-architecture arch of ShiftRegisterPIPO16 is
- 
-begin
- 
-process (clock)
-
-begin
- 
-If direction == 0 then 
-	out[t+1] = out[t] << 1
-	
-else 
-	out[t+1] = out[t] >> 1
-	
-end process;
- 
-end arch;
