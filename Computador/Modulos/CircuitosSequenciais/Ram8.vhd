@@ -15,41 +15,19 @@ entity Ram8 is
 	);
 end entity;
 
-entity Register16 is
-	port(
-		clock:   in STD_LOGIC;
-		input:   in STD_LOGIC_VECTOR(15 downto 0);
-		load:    in STD_LOGIC;
-		output: out STD_LOGIC_VECTOR(15 downto 0)
-	);
-end entity;
+architecture arch_Ram8 of Ram8 is
+   type memory is array(0 to 7) of std_logic_vector(15 downto 0);
+   signal ram_block : memory;
 
-entity Mux8Way16 is
-	port ( 
-			a:   in  STD_LOGIC_VECTOR(15 downto 0);
-			b:   in  STD_LOGIC_VECTOR(15 downto 0);
-			c:   in  STD_LOGIC_VECTOR(15 downto 0);
-			d:   in  STD_LOGIC_VECTOR(15 downto 0);
-			e:   in  STD_LOGIC_VECTOR(15 downto 0);
-			f:   in  STD_LOGIC_VECTOR(15 downto 0);
-			g:   in  STD_LOGIC_VECTOR(15 downto 0);
-			h:   in  STD_LOGIC_VECTOR(15 downto 0);
-			sel: in  STD_LOGIC_VECTOR(2 downto 0);
-			q:   out STD_LOGIC_VECTOR(15 downto 0));
-end entity;
+begin
 
-entity DMux8Way is
-	port ( 
-			a:   in  STD_LOGIC;
-			sel: in  STD_LOGIC_VECTOR(2 downto 0);
-			q0:  out STD_LOGIC;
-			q1:  out STD_LOGIC;
-			q2:  out STD_LOGIC;
-			q3:  out STD_LOGIC;
-			q4:  out STD_LOGIC;
-			q5:  out STD_LOGIC;
-			q6:  out STD_LOGIC;
-			q7:  out STD_LOGIC);
-end entity;
+	process(clock)
+		if (clock'event and clock='1') then
+			if (load='1') then
+				ram_block(to_integer(unsigned(address))) <= input;
+			end if;
+		end if;
+	end process;
+	output <= ram_block(to_integer(unsigned(address)));
 
-- 8 registradores 1 load cada
+end architecture;
