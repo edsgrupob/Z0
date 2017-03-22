@@ -27,11 +27,4 @@ end component;
 
 begin 
 	u1: BinaryDigit port map (clock, input, load, output);
-	u2: BinaryDigit port map (clock, input, load, output);
-	u3: BinaryDigit port map (clock, input, load, output);
-	u4: BinaryDigit port map (clock, input, load, output);
-	u5: BinaryDigit port map (clock, input, load, output);
-	u6: BinaryDigit port map (clock, input, load, output);
-	u7: BinaryDigit port map (clock, input, load, output);
-	u8: BinaryDigit port map (clock, input, load, output);
 end architecture;
