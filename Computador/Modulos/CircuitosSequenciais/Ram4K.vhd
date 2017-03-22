@@ -1,12 +1,12 @@
 -- Elementos de Sistemas
 -- by Luciano Soares
--- Ram8.vhd
+-- Ram4k.vhd
 
 Library ieee; 
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
   
-entity Ram8 is
+entity Ram4k is
 	port(
 		clock:   in  STD_LOGIC;
 		input:   in  STD_LOGIC_VECTOR(8191 downto 0);
