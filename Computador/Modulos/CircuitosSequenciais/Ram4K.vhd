@@ -4,30 +4,53 @@
 
 Library ieee; 
 use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
   
 entity Ram4k is
 	port(
 		clock:   in  STD_LOGIC;
-		input:   in  STD_LOGIC_VECTOR(8191 downto 0);
+		input:   in  STD_LOGIC_VECTOR(15 downto 0);
 		load:    in  STD_LOGIC;
-		address: in  STD_LOGIC_VECTOR(12 downto 0);
-		output:  out STD_LOGIC_VECTOR(8191 downto 0)
+		address: in  STD_LOGIC_VECTOR(11 downto 0);
+		output:  out STD_LOGIC_VECTOR(15 downto 0)
 	);
 end entity;
 
 architecture arch_Ram4k of Ram4k is
-   type memory is array(0 to 4095) of std_logic_vector(8191 downto 0);
-   signal signal_ram : memory;
+
+component Ram512
+	port(
+		clock:   in  STD_LOGIC;
+		input:   in  STD_LOGIC_VECTOR(15 downto 0);
+		load:    in  STD_LOGIC;
+		address: in  STD_LOGIC_VECTOR( 9 downto 0);
+		output:  out STD_LOGIC_VECTOR(15 downto 0)
+	);
+end component;
+
+component Mux8Way16
+	port ( 
+			a:   in  STD_LOGIC_VECTOR(15 downto 0);
+			b:   in  STD_LOGIC_VECTOR(15 downto 0);
+			c:   in  STD_LOGIC_VECTOR(15 downto 0);
+			d:   in  STD_LOGIC_VECTOR(15 downto 0);
+			e:   in  STD_LOGIC_VECTOR(15 downto 0);
+			f:   in  STD_LOGIC_VECTOR(15 downto 0);
+			g:   in  STD_LOGIC_VECTOR(15 downto 0);
+			h:   in  STD_LOGIC_VECTOR(15 downto 0);
+			sel: in  STD_LOGIC_VECTOR(2 downto 0);
+			q:   out STD_LOGIC_VECTOR(15 downto 0));
+end component;
+
+signal w1, w2, w3, w4, w5, w6, w7, w8: STD_LOGIC_VECTOR(15 downto 0);
 
 begin
-
-	process(clock)
-	begin
-		if (clock'event and clock='1' and load='1') then
-				signal_ram(to_integer(unsigned(address))) <= input;
-		end if;
-	end process;
-	output <= signal_ram(to_integer(unsigned(address)));
-
+	u1: Ram512 port map (clock, input, load, address(2 downto 0), w1);
+	u2: Ram512 port map (clock, input, load, address(2 downto 0), w2);
+	u3: Ram512 port map (clock, input, load, address(2 downto 0), w3);
+	u4: Ram512 port map (clock, input, load, address(2 downto 0), w4);
+	u5: Ram512 port map (clock, input, load, address(2 downto 0), w5);
+	u6: Ram512 port map (clock, input, load, address(2 downto 0), w6);
+	u7: Ram512 port map (clock, input, load, address(2 downto 0), w7);
+	u8: Ram512 port map (clock, input, load, address(2 downto 0), w8);
+	u9: Mux8Way16 port map (w1, w2, w3, w4, w5, w6, w7, w8, address(5 downto 3), output);
 end architecture;
