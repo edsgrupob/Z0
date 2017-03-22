@@ -20,7 +20,7 @@ architecture arch_ShiftRegisterSIPO16 of ShiftRegisterSIPO16 is
 
 signal w: STD_LOGIC_VECTOR(15 downto 0)
 
-component BinaryDigit is
+component BinaryDigit
 port(
 		clock:   in STD_LOGIC;
 		input:   in STD_LOGIC;
