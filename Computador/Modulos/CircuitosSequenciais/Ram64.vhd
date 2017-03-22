@@ -44,13 +44,13 @@ end component;
 signal w1, w2, w3, w4, w5, w6, w7, w8: STD_LOGIC_VECTOR(15 downto 0);
 
 begin
-	u1: Ram8 port map (clock, input, load, address, w1);
-	u2: Ram8 port map (clock, input, load, address, w2);
-	u3: Ram8 port map (clock, input, load, address, w3);
-	u4: Ram8 port map (clock, input, load, address, w4);
-	u5: Ram8 port map (clock, input, load, address, w5);
-	u6: Ram8 port map (clock, input, load, address, w6);
-	u7: Ram8 port map (clock, input, load, address, w7);
-	u8: Ram8 port map (clock, input, load, address, w8);
-	u9: Mux8Way16 port map (w1, w2, w3, w4, w5, w6, w7, w8, address, output);
+	u1: Ram8 port map (clock, input, load, address(2 downto 0), w1);
+	u2: Ram8 port map (clock, input, load, address(2 downto 0), w2);
+	u3: Ram8 port map (clock, input, load, address(2 downto 0), w3);
+	u4: Ram8 port map (clock, input, load, address(2 downto 0), w4);
+	u5: Ram8 port map (clock, input, load, address(2 downto 0), w5);
+	u6: Ram8 port map (clock, input, load, address(2 downto 0), w6);
+	u7: Ram8 port map (clock, input, load, address(2 downto 0), w7);
+	u8: Ram8 port map (clock, input, load, address(2 downto 0), w8);
+	u9: Mux8Way16 port map (w1, w2, w3, w4, w5, w6, w7, w8, address(5 downto 3), output);
 end architecture;
