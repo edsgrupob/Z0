@@ -29,7 +29,7 @@ end entity;
 
 architecture chip_Register64 of Register64 is
 
-component Register32 is
+component Register32
 	port(
 		clock:   in STD_LOGIC;
 		input:   in STD_LOGIC_VECTOR(31 downto 0);
