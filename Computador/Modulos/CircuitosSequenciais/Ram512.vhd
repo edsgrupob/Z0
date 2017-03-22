@@ -52,5 +52,5 @@ begin
 	u6: Ram64 port map (clock, input, load, address(2 downto 0), w6);
 	u7: Ram64 port map (clock, input, load, address(2 downto 0), w7);
 	u8: Ram64 port map (clock, input, load, address(2 downto 0), w8);
-	u9: Mux8Way16 port map (w1, w2, w3, w4, w5, w6, w7, w8, address(5 downto 3), output);
+	u9: Mux8Way16 port map (w1, w2, w3, w4, w5, w6, w7, w8, address(8 downto 3), output);
 end architecture;
