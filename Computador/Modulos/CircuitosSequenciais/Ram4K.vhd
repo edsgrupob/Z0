@@ -11,7 +11,7 @@ entity Ram4k is
 		clock:   in  STD_LOGIC;
 		input:   in  STD_LOGIC_VECTOR(8191 downto 0);
 		load:    in  STD_LOGIC;
-		address: in  STD_LOGIC_VECTOR(6 downto 0);
+		address: in  STD_LOGIC_VECTOR(12 downto 0);
 		output:  out STD_LOGIC_VECTOR(8191 downto 0)
 	);
 end entity;
