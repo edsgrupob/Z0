@@ -15,6 +15,7 @@ entity Register8 is
 end entity;
 
 architecture arch_Register8 of Register8 is
+--	signal w1, w2, w3, w4, w5, w6, w7, w8: in STD_LOGIC;
 
 component BinaryDigit
 	port(
@@ -26,5 +27,12 @@ component BinaryDigit
 end component;
 
 begin 
-	u1: BinaryDigit port map (clock, input, load, output);
+	u1: BinaryDigit port map (clock, input(0), load, output(0));
+	u2: BinaryDigit port map (clock, input(1), load, output(1));
+	u3: BinaryDigit port map (clock, input(2), load, output(2));
+	u4: BinaryDigit port map (clock, input(3), load, output(3));
+	u5: BinaryDigit port map (clock, input(4), load, output(4));
+	u6: BinaryDigit port map (clock, input(5), load, output(5));
+	u7: BinaryDigit port map (clock, input(6), load, output(6));
+	u8: BinaryDigit port map (clock, input(7), load, output(7));
 end architecture;
