@@ -11,13 +11,13 @@ entity Ram4k is
 		clock:   in  STD_LOGIC;
 		input:   in  STD_LOGIC_VECTOR(8191 downto 0);
 		load:    in  STD_LOGIC;
-		address: in  STD_LOGIC_VECTOR(7 downto 0);
+		address: in  STD_LOGIC_VECTOR(6 downto 0);
 		output:  out STD_LOGIC_VECTOR(8191 downto 0)
 	);
 end entity;
 
 architecture arch_Ram4k of Ram4k is
-   type memory is array(4095 to 7) of std_logic_vector(8191 downto 0);
+   type memory is array(0 to 4095) of std_logic_vector(8191 downto 0);
    signal signal_ram : memory;
 
 begin
