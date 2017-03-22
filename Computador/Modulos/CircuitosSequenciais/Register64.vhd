@@ -41,7 +41,7 @@ end component;
 
 begin
 
-	u1: Register832 port map(clock, input(31 downto 0), load, output(31 downto 0));
-	u2: Register32 port map(clock, input(63 downto 8), load, output(63 downto 8));
+	u1: Register32 port map(clock, input(31 downto 0), load, output(31 downto 0));
+	u2: Register32 port map(clock, input(63 downto 32), load, output(63 downto 32));
 
 end architecture;
