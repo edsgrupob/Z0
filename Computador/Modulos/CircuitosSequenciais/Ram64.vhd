@@ -27,7 +27,7 @@ component Ram8
 	);
 end component;
 
-signal
+signal w1, w2, w3, w4, w5, w6, w7, w8: STD_LOGIC_VECTOR(15 downto 0);
 
 begin
 	u1: Ram8 port map (clock, input, load, address, w1);
