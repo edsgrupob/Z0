@@ -16,12 +16,12 @@ entity ShiftRegisterSISO16 is
 	);
 end entity;
 
-architecture arch of ShiftRegeisterSISO16 is
+architecture arch of ShiftRegisterSISO16 is
 
 component FlipFlopD is
     port(
         clock, d, clear, preset: in STD_LOGIC;
-        q: out in STD_LOGIC;
+        q: out in STD_LOGIC
     );
 end component
 signal c0, c1, c2, c3, c4, c5, c6, c7, c8, c9 , cA, cB, cC, cD, cE: STD_LOGIC;
