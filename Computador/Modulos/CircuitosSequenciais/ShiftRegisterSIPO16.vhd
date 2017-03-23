@@ -18,35 +18,36 @@ end entity;
 
 architecture arch_ShiftRegisterSIPO16 of ShiftRegisterSIPO16 is
 
-signal w: STD_LOGIC_VECTOR(15 downto 0)
+signal w: STD_LOGIC_VECTOR(15 downto 0);
 
-component BinaryDigit
-port(
-		clock:   in STD_LOGIC;
-		input:   in STD_LOGIC;
-		load:    in STD_LOGIC;
-		output: out STD_LOGIC
-	);
-
+component FlipFlopD
+	port(
+			clock:  in std_logic;
+			d:      in std_logic;
+			clear:  in std_logic;
+			preset: in std_logic;
+			q:     out std_logic
+		);
 end component;
 
 begin 
-	u1: BinaryDigit port map (clock, input, load, w(0));
-	u2: BinaryDigit port map (clock, w(0), load, w(1));
-	u3: BinaryDigit port map (clock, w(1), load, w(2));
-	u4: BinaryDigit port map (clock, w(2), load, w(3));
-	u5: BinaryDigit port map (clock, w(3), load, w(4));
-	u6: BinaryDigit port map (clock, w(4), load, w(5));
-	u7: BinaryDigit port map (clock, w(5), load, w(6));
-	u8: BinaryDigit port map (clock, w(6), load, w(7));
-	u9: BinaryDigit port map (clock, w(7), load, w(8));
-	u10: BinaryDigit port map (clock, w(8), load, w(9));
-	u11: BinaryDigit port map (clock, w(9), load, w(10));
-	u12: BinaryDigit port map (clock, w(10), load, w(11));
-	u13: BinaryDigit port map (clock, w(11), load, w(12));
-	u14: BinaryDigit port map (clock, w(12), load, w(13));
-	u15: BinaryDigit port map (clock, w(13), load, w(14));
-	u16: BinaryDigit port map (clock, w(14), load, w(15));
+	u1: FlipFlopD port map (clock, input, '1', '1', w(0));
+	u2: FlipFlopD port map (clock, w(0), '1', '1',  w(1));
+	u3: FlipFlopD port map (clock, w(1), '1', '1',  w(2));
+	u4: FlipFlopD port map (clock, w(2), '1', '1',  w(3));
+	u5: FlipFlopD port map (clock, w(3), '1', '1',  w(4));
+	u6: FlipFlopD port map (clock, w(4), '1', '1',  w(5));
+	u7: FlipFlopD port map (clock, w(5), '1', '1',  w(6));
+	u8: FlipFlopD port map (clock, w(6), '1', '1',  w(7));
+	u9: FlipFlopD port map (clock, w(7), '1', '1',  w(8));
+	u10: FlipFlopD port map (clock, w(8), '1', '1',  w(9));
+	u11: FlipFlopD port map (clock, w(9), '1', '1',  w(10));
+	u12: FlipFlopD port map (clock, w(10), '1', '1',  w(11));
+	u13: FlipFlopD port map (clock, w(11), '1', '1',  w(12));
+	u14: FlipFlopD port map (clock, w(12), '1', '1',  w(13));
+	u15: FlipFlopD port map (clock, w(13), '1', '1',  w(14));
+	u16: FlipFlopD port map (clock, w(14), '1', '1',  w(15));
 
-	output <= w
+	output <= w;
+	
 end architecture;
