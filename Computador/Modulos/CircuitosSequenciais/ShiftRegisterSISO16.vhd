@@ -23,7 +23,7 @@ component FlipFlopD is
         clock, d, clear, preset: in STD_LOGIC;
         q: out STD_LOGIC
     );
-end component
+end component;
 signal c0, c1, c2, c3, c4, c5, c6, c7, c8, c9 , cA, cB, cC, cD, cE: STD_LOGIC;
 
 begin
@@ -47,4 +47,4 @@ begin
     FFD: FlipFlopD port map (clock, cC, '1', '1', cD);
     FFE: FlipFlopD port map (clock, cD, '1', '1', cE);
     FFF: FlipFlopD port map (clock, cE, '1', '1', output);
-end architecture
+end architecture;
