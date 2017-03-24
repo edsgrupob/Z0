@@ -8,7 +8,7 @@
 -- ou seja, a cada pulso de clock: output = input[0], output = input[1], output = input[2], ...
 -- os outros bits necessário para preencher o espaço que abriu no shift podem ser preenchidos com 0
 
-Library ieee; 
+Library ieee;
 use ieee.std_logic_1164.all;
 
 entity ShiftRegisterPISO16 is
@@ -36,7 +36,7 @@ component FlipFlopD
 end component;
 
 component Mux2Way
-	port ( 
+	port (
 			a:   in  STD_LOGIC;
 			b:   in  STD_LOGIC;
 			sel: in  STD_LOGIC;
@@ -44,6 +44,7 @@ component Mux2Way
 end component;
 
 begin
+	sel <= not shift;
 	u1: Mux2Way port map ('0', input(0), sel, w(0));
 	u2: FlipFlopD port map (clock, w(0), '1', '1', w(1));
 	u3: Mux2Way port map (w(1), input(1), sel, w(2));
