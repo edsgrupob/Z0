@@ -3,9 +3,10 @@
 -- ShiftRegisterPISO16.vhd
 
 -- shift register tipo PISO de 16 bits:
--- If load == 1 then load in
--- out = in[0], out = in[1], out = in[2], ...
--- os outros bits podem ser preenchidos com 0
+-- If shift == 0 then carrega dados da entrada (input)
+-- Senão a saída (output) vai emitindo bit a bit o valor do registrar interno
+-- ou seja, a cada pulso de clock: output = input[0], output = input[1], output = input[2], ...
+-- os outros bits necessário para preencher o espaço que abriu no shift podem ser preenchidos com 0
 
 Library ieee; 
 use ieee.std_logic_1164.all;
