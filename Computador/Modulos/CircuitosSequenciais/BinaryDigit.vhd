@@ -30,6 +30,9 @@ architecture arch_BinaryDigit of BinaryDigit is
 			preset: in std_logic;
 			q:     out std_logic);
 	end component;
+	signal  
 begin
-	
+	u1: Mux2Way port map (q, 
+	u2: Mux2Way port map (q, 
 end architecture;
+ 
