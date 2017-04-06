@@ -18,17 +18,17 @@ movw %D,(%A)
 
 leaw $15, %A
 movw %A, %D
-leaw $16448,%A
+leaw $16480,%A
 movw %D,(%A)
 
 leaw $31, %A
 movw %A, %D
-leaw $16448,%A
+leaw $16512,%A
 movw %D,(%A)
 
 leaw $63, %A
 movw %A, %D
-leaw $16448,%A
+leaw $16544,%A
 movw %D,(%A)
 
 
