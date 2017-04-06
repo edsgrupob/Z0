@@ -143,6 +143,18 @@ movw (%A), %D
 leaw $END,%A
 jle
 
+leaw $2, %A 
+movw %A, %D 
+leaw $12, %A
+movw %D, (%A) 
+leaw $1, %A 
+movw %A, %D 
+leaw $0, %A
+subw (%A), %D, (%A) 
+movw (%A), %D
+leaw $END,%A
+jle
+
 leaw $1, %A 
 movw %A, %D 
 leaw $13, %A
