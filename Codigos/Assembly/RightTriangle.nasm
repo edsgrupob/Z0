@@ -31,5 +31,14 @@ movw %A, %D
 leaw $16544,%A
 movw %D,(%A)
 
+leaw $127, %A
+movw %A, %D
+leaw $16576,%A
+movw %D,(%A)
+
+leaw $255, %A
+movw %A, %D
+leaw $16608,%A
+movw %D,(%A)
 
 
