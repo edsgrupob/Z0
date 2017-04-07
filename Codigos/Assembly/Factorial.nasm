@@ -22,7 +22,7 @@ movw (%A), %D
 leaw $CASOZERO, %A
 je
 nop
-;
+
 ;se for um, escapar
 leaw $1, %A
 movw (%A), %D
