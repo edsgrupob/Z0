@@ -6,10 +6,20 @@
 ; RAM[1]=1, RAM[2]=2, RAM[3]=1, RAM[4]=1, RAM[5]=2, RAM[6]=1
 ; Maiores informações em: https://oeis.org/A000002
 
+
+
+
+
+
+
+; Pega o valor de RAM[0] e subtrai 1
+
 leaw $1, %A
 movw %A, %D
 leaw $0, %A
 subw (%A), %D, (%A)
+
+; Primeiro seta 1 como o primeiro item da lista e depois coloca esse valor na RAM[1]; então se RAM[0] menor ou igual a zero pula pro end, senão continua
 
 leaw $1, %A 
 movw %A, %D 
@@ -22,6 +32,8 @@ subw (%A), %D, (%A)
 movw (%A), %D
 leaw $END,%A
 jle
+
+; Primeiro seta 2 como o primeiro item da lista e depois coloca esse valor na RAM[2]; então se RAM[0] menor ou igual a zero pula pro end, senão continua
 
 leaw $2, %A 
 movw %A, %D 
@@ -35,6 +47,8 @@ movw (%A), %D
 leaw $END,%A
 jle
 
+; Primeiro seta 2 como o primeiro item da lista e depois coloca esse valor na RAM[3]; então se RAM[0] menor ou igual a zero pula pro end, senão continua
+
 leaw $2, %A 
 movw %A, %D 
 leaw $3, %A
@@ -46,6 +60,8 @@ subw (%A), %D, (%A)
 movw (%A), %D
 leaw $END,%A
 jle
+
+;repete
 
 leaw $1, %A 
 movw %A, %D 
@@ -395,5 +411,8 @@ movw (%A), %D
 leaw $END,%A
 jmp
 
+; Fim do programa
+
 END:
-nop
+leaw $END, %A
+jmp
