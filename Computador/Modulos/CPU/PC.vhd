@@ -20,6 +20,13 @@ end entity;
 
 architecture arch_PC of PC is
 
+signal os1:STD_LOGIC;
+signal os2:STD_LOGIC;
+signal os3:STD_LOGIC;
+signal os4:STD_LOGIC;
+signal os5:STD_LOGIC;
+signal os6:STD_LOGIC;
+
 component Register16 is
 	port(
 			clock:   in STD_LOGIC;
@@ -37,18 +44,35 @@ component Register16 is
 		); 
 	end component; 
 
-	component Mux8Way16 is
-
+	component Mux16 is
+	
 	port ( 
 			a:   in  STD_LOGIC_VECTOR(15 downto 0);
 			b:   in  STD_LOGIC_VECTOR(15 downto 0);
-			c:   in  STD_LOGIC_VECTOR(15 downto 0);
-			d:   in  STD_LOGIC_VECTOR(15 downto 0);
-			e:   in  STD_LOGIC_VECTOR(15 downto 0);
-			f:   in  STD_LOGIC_VECTOR(15 downto 0);
-			g:   in  STD_LOGIC_VECTOR(15 downto 0);
-			h:   in  STD_LOGIC_VECTOR(15 downto 0);
-			sel: in  STD_LOGIC_VECTOR(2 downto 0);
+			sel: in  STD_LOGIC;
+			q:   out STD_LOGIC_VECTOR(15 downto 0));
+	
+	end component;
+
+component Not16 is
+	port ( 
+			a:   in  STD_LOGIC_VECTOR(15 downto 0);
 			q:   out STD_LOGIC_VECTOR(15 downto 0));
 end component;
 
+component And16 is
+	port ( 
+			a:   in  STD_LOGIC_VECTOR(15 downto 0);
+			b:   in  STD_LOGIC_VECTOR(15 downto 0);
+			q:   out STD_LOGIC_VECTOR(15 downto 0));
+end component;
+
+begin
+	s1: Mux16 port map (input,os4,os5,os1);
+	s2: Mux16 port map (os1,os4,reset,os2); 
+	s3: Register16 port map (clock, os2, os6, os3); 
+	s4: Add16 port map (os3, increment, os4);
+	s5: Not16 port map (load,os5);
+	s6: And16 port map (load,increment,os6);
+
+end architecture;
