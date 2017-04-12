@@ -20,10 +20,10 @@ end entity;
 
 architecture arch_PC of PC is
 
-signal os1:STD_LOGIC;
-signal os2:STD_LOGIC;
-signal os3:STD_LOGIC;
-signal os4:STD_LOGIC;
+signal os1:STD_LOGIC_VECTOR(15 downto 0);
+signal os2:STD_LOGIC_VECTOR(15 downto 0);
+signal os3:STD_LOGIC_VECTOR(15 downto 0);
+signal os4:STD_LOGIC_VECTOR(15 downto 0);
 signal os5:STD_LOGIC;
 signal os6:STD_LOGIC;
 
@@ -72,7 +72,9 @@ begin
 	s2: Mux16 port map (os1,os4,reset,os2); 
 	s3: Register16 port map (clock, os2, os6, os3); 
 	s4: Add16 port map (os3, increment, os4);
-	s5: Not16 port map (load,os5);
-	s6: And16 port map (load,increment,os6);
+	--s5: Not16 port map (load,os5);
+	--s6: And16 port map (load,increment,os6);
+
+    os5 <= not load;
 
 end architecture;
