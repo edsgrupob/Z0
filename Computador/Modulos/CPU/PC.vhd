@@ -73,13 +73,10 @@ begin
 	s2: Mux16 port map (os1,"0000000000000000",reset,os2); 
 	s3: Register16 port map (clock, os2, os6, os3); 
 	s4: Add16 port map (os3, os7 , os4);
-	--s5: Not16 port map (load,os5);
-	--s6: And16 port map (load,increment,os6);
-
     
-	 os7 <= "000000000000000"&increment;
-	 os5 <= not load;
-	 os6 <= load or reset or increment;
-	 output <= os3(14 downto 0);
+	os7 <= "000000000000000"&&increment;
+	os5 <= not load;
+	os6 <= load or reset or increment;
+	output <= os3(14 downto 0);
 
 end architecture;
