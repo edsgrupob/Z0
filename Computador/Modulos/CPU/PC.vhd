@@ -26,6 +26,7 @@ signal os3:STD_LOGIC_VECTOR(15 downto 0);
 signal os4:STD_LOGIC_VECTOR(15 downto 0);
 signal os5:STD_LOGIC;
 signal os6:STD_LOGIC;
+signal os7:STD_LOGIC_VECTOR(15 downto 0);
 
 component Register16 is
 	port(
@@ -69,12 +70,13 @@ end component;
 
 begin
 	s1: Mux16 port map (input,os4,os5,os1);
-	s2: Mux16 port map (os1,os4,reset,os2); 
+	s2: Mux16 port map (os1,"0000000000000000",reset,os2); 
 	s3: Register16 port map (clock, os2, os6, os3); 
-	s4: Add16 port map (os3, increment, os4);
-	--s5: Not16 port map (load,os5);
-	--s6: And16 port map (load,increment,os6);
-
-    os5 <= not load;
+	s4: Add16 port map (os3, os7 , os4);
+    
+	os7 <= "000000000000000"&increment;
+	os5 <= not load;
+	os6 <= load or reset or increment;
+	output <= os3(14 downto 0);
 
 end architecture;
