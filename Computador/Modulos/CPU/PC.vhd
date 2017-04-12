@@ -74,7 +74,7 @@ begin
 	s3: Register16 port map (clock, os2, os6, os3); 
 	s4: Add16 port map (os3, os7 , os4);
     
-	os7 <= "000000000000000"&&increment;
+	os7 <= "000000000000000"&increment;
 	os5 <= not load;
 	os6 <= load or reset or increment;
 	output <= os3(14 downto 0);
