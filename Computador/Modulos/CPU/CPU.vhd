@@ -14,4 +14,6 @@ entity CPU is
         pcout:       out STD_LOGIC_VECTOR(14 downto 0)     -- endereço para ser enviado a memória ROM
   );
 end entity;
-
+architecture arch_CPU of CPU is
+begin
+end architecture;
