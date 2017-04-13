@@ -71,24 +71,22 @@ component ControlUnit
 end component;
 
 signal zr_cu,ng_cu,muxALUI_A,muxAM_ALU,zx_cu, nx_cu, zy_cu, ny_cu, f_cu, no_cu,loadA, loadD, loadM, loadPC, -- Control Unit
-		 zr,ng,zx, nx, zy, ny, f, no, -- ALU
-		 clock_pc, increment, load_pc, reset -- PC
-		 a, b, sel, q -- MUX
-		 clock_reg, load_reg -- Register
-		 :STD_LOGIC;
+		 zx, nx, zy, ny, f, no, zr,ng,-- ALU
+		 clock_pc, increment, load_pc, reset_pc, -- PC
+		 a, b, sel, sel2, q, q2, -- MUX
+		 clock_reg, load_reg, clock_reg2, load_reg2: STD_LOGIC;
 
-signal x, y, instruction, input_PC, input_reg, output_reg, saida_alu:STD_LOGIC_VECTOR(15 downto 0);
-signal output_pc:STD_LOGIC_VECTOR(14 downto 0);
+signal x, y, instruction_cu, input_PC, input_reg, output_reg, output_reg2, saida_alu: STD_LOGIC_VECTOR(15 downto 0);
+signal output_pc: STD_LOGIC_VECTOR(14 downto 0);
 		 
 
 begin
-
-u1: ControlUnit port map (instruction, zr_cu,ng_cu,muxALUI_A,muxAM_ALU,zx_cu, nx_cu, zy_cu, ny_cu, f_cu, no_cu,loadA, loadD, loadM, loadPC);
-u2: Mux2Way port map ();
-u3: Register16 port map ();
-u4: Mux2Way port map ();
-u5: Register16 port map ();
-u6: ALU port map ();
-u7: PC port map ();
-
+u1: ControlUnit port map (instruction_cu, zr_cu,ng_cu,muxALUI_A,muxAM_ALU,zx_cu, nx_cu, zy_cu, ny_cu, f_cu, no_cu,loadA, loadD, loadM, loadPC);
+u2: Mux2Way port map (saida_alu, instruction_cu, sel, q);
+u3: Register16 port map (clock_reg, q, load_reg, output_reg);
+u4: Mux2Way port map (output_reg,inM,sel,q2);
+u5: Register16 port map (clock_reg2, output_alu, load_reg2, output_reg2);
+u6: ALU port map (q2, output_reg2, zx, nx, zy, ny, f, no, zr,ng, saida_alu);
+u7: PC port map (clock_pc, increment, load_pc, reset_pc,q2, output_pc);
+u8: CPU port map (clock,inM,instruction,reset,outM,writeM,addressM,output_pc);
 end architecture;
