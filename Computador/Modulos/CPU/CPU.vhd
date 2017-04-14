@@ -82,7 +82,7 @@ u3: Register16 port map (clock, in_regA, loadA, out_regA);
 u4: Mux16 port map (out_regA, inM, muxAM_ALU, in_ALU2);
 u5: Register16 port map (clock, output_ALU, loadD, in_ALU);
 u6: ALU port map (in_ALU, in_ALU2, zx, nx, zy, ny, f, no, zr, ng, output_ALU);
-u7: PC port map (clock, increment, loadPC, reset, out_regA, pcout);
+u7: PC port map (clock, '1', loadPC, reset, out_regA, pcout);
 writeM <= loadM;
 outM <= output_ALU;
 addressM <= out_regA(14 downto 0);
