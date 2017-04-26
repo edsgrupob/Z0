@@ -5,16 +5,21 @@
 
 package assembler;
 
+import java.util.Hashtable;
+import java.util.Set;
+
 /**
  * Mantém uma tabela com a correspondência entre os rótulos simbólicos e endereços numéricos de memória.
  */
 public class SymbolTable {
-
-    /**
+	Hashtable<String, Integer> symbolTable;
+	/**
      * Cria a tabela de símbolos.
      */
+	
     public SymbolTable() {
-
+    	symbolTable = new Hashtable<String, Integer>();
+    	
     }
 
     /**
@@ -23,6 +28,8 @@ public class SymbolTable {
      * @param  address símbolo a ser armazenado na tabela de símbolos.
      */
     public void addEntry(String symbol, int address) {
+    	
+    	symbolTable.put(symbol, address);
 
     }
 
@@ -32,7 +39,14 @@ public class SymbolTable {
      * @return Verdadeiro se símbolo está na tabela de símbolos, Falso se não está na tabela de símbolos.
      */
     public boolean contains(String symbol) {
-
+    	boolean contains = false;
+    	Set<String> keys = symbolTable.keySet();
+    	for(String key: keys){
+    		if (key == symbol) {
+    			contains = true;
+    		}
+    	}
+    	return contains;
     }
 
     /**
@@ -41,7 +55,8 @@ public class SymbolTable {
      * @return valor numérico associado ao símbolo procurado.
      */
     public int getAddress(String symbol) {
-
+    	int getAddress = symbolTable.get(symbol);
+    	return getAddress;
     }
 
 }
