@@ -16,8 +16,36 @@ public class Code {
      * @return Opcode (String de 3 bits) com código em linguagem de máquina para a instrução.
      */
     public static String dest(String[] mnemnonic) {
-    	//return null;
-    	return "xxx";
+    	if (mnemnonic.length == 2) {
+    		if (mnemnonic[1].equals("%D")) {
+    			return "010";
+    		}
+    		else {
+    			return "100";
+    		}
+    	}
+    	else if (mnemnonic.length == 3) {
+    		if (mnemnonic[2].equals("%D")) {
+    			return "010";
+    		}
+    		else if (mnemnonic[2].equals("%A")) {
+    			return "100";
+    		}
+    		else {
+    			return "001";
+    		}
+    	}
+    	else if (mnemnonic.length == 4) {
+    		if (mnemnonic[3].equals("%D")) {
+    			return "010";
+    		}
+    		else {
+    			return "100";
+    		}
+    	}
+    	else {
+    		return "000";
+    	}
     }
 
     /**
@@ -35,7 +63,30 @@ public class Code {
      * @return Opcode (String de 3 bits) com código em linguagem de máquina para a instrução.
      */
     public static String jump(String[] mnemnonic) {
-    	return null;
+    	if (mnemnonic[0].equals("jmp")) {
+    		return "111";
+    	} 
+    	else if (mnemnonic[0].equals("je")) {
+    		return "010";
+    	}
+    	else if (mnemnonic[0].equals("jne")) {
+    		return "101";
+    	}
+    	else if (mnemnonic[0].equals("jg")) {
+    		return "001";
+    	}
+    	else if (mnemnonic[0].equals("jge")) {
+    		return "011";
+    	}
+    	else if (mnemnonic[0].equals("jl")) {
+    		return "100";
+    	}
+    	else if (mnemnonic[0].equals("jle")) {
+    		return "110";
+    	}
+    	else {
+    		return "000";
+    	}
     }
 
     /**
