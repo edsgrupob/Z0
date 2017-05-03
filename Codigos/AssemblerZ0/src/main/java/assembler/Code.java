@@ -44,7 +44,13 @@ public class Code {
      * @return Valor em binário (String de 15 bits) representado com 0s e 1s.
      */
     public static String toBinary(String symbol) {
-    	return null;
+		int decimal = Integer.parseInt(symbol);
+		String binary = Integer.toBinaryString(decimal);
+		int size = binary.length();
+		for (int i = 0; i < 15 - size; i++){
+			binary = "0" + binary;
+		}
+		return binary;
     }
 
 }
