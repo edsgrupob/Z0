@@ -52,16 +52,21 @@ public class Parser {
      * @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
      */
     public boolean advance() {
-        try{
-            current= reader.readLine();
-        }catch(IOException e){
-            System.out.println(e.getMessage());
+        boolean isInstruction= false;
+        
+        while (!isInstruction && current != null){
+            try{
+                current= reader.readLine();
+            }catch(IOException e){
+                System.out.println(e.getMessage());
+            }
+            
+            if (current.charAt(0) != ';' && !current.trim().isEmpty()){
+                isInstruction= true;
+            }
         }
         
-        if (current==null){
-		    return false;
-	    }
-	    return true;
+        return isInstruction;
     }
 
     /**
