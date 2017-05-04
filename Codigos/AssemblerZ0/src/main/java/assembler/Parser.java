@@ -105,7 +105,7 @@ public class Parser {
     public String symbol(String command) {
         String[] parts = command.split(" ");
         String symbol= parts[1];
-        symbol = symbol.string.split(",")[0];
+        symbol = symbol.split(",")[0];
         //acho que a vírgula pode ser separada do token por um espaço
         symbol = symbol.substring(1, symbol.length());
         //remove o $ que precede o symbol
