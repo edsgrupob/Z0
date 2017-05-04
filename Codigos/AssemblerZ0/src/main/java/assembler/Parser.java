@@ -51,7 +51,7 @@ public class Parser {
         
         if (current==null){
 		    return false;
-	    {
+	    }
 	    return true;
     }
 
