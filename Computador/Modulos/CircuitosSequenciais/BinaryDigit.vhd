@@ -36,7 +36,7 @@ begin
 
 	u1: FlipFlopD port map (clock, w1, '1', '1', w2);
 	u2: Mux2Way port map (w2, input, load, w1);
-	output <= w1;
+	output <= w2;
 end architecture;
 
 
