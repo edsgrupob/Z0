@@ -33,6 +33,7 @@ public class Parser {
      * @param file arquivo NASM que será feito o parser.
      */
     public Parser(String file) {
+        current="";
         try{
             reader = new BufferedReader(new FileReader(file));
         }catch (FileNotFoundException e){
@@ -61,7 +62,7 @@ public class Parser {
                 System.out.println(e.getMessage());
             }
             
-            if (current.charAt(0) != ';' && !current.trim().isEmpty()){
+            if (current != null && !current.trim().isEmpty() && current.charAt(0) != ';'){
                 isInstruction= true;
             }
         }
