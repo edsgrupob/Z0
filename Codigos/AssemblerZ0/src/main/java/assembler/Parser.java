@@ -5,6 +5,9 @@
 
 package assembler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Encapsula o código de leitura. Carrega as instruções na linguagem assembly,
  * analisa, e oferece acesso as partes da instrução  (campos e símbolos).
@@ -19,7 +22,7 @@ public class Parser {
         L_COMMAND       // comandos de Label (símbolos)
     }
 
-    /** 
+    /**
      * Abre o arquivo de entrada NASM e se prepara para analisá-lo.
      * @param file arquivo NASM que será feito o parser.
      */
@@ -33,8 +36,9 @@ public class Parser {
      * entrada o método retorna "Falso", senão retorna "Verdadeiro".
      * @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
      */
-    public Boolean advance() {
-    	return null;
+    public boolean advance() {
+		return false;
+
     }
 
     /**
@@ -42,7 +46,8 @@ public class Parser {
      * @return a instrução atual para ser analilisada
      */
     public String command() {
-    	return null;
+		return null;
+
     }
 
     /**
@@ -53,9 +58,20 @@ public class Parser {
      * @param  command instrução a ser analisada.
      * @return o tipo da instrução.
      */
-    public CommandType commandType(String command) {
-    	return null;
-    }
+     public CommandType commandType(String command) {
+     	String[] parts = command.split(" ");
+     	char last = parts[0].charAt(parts[0].length() - 1);
+     	if (parts[0].equals("leaw")){
+     		return CommandType.A_COMMAND;
+     	}
+     	else if (last == ':'){
+     		return CommandType.L_COMMAND;
+     	}
+     	else {
+     		return CommandType.C_COMMAND;
+     	}
+
+     }
 
     /**
      * Retorna o símbolo ou valor numérico da instrução passada no argumento.
@@ -64,7 +80,8 @@ public class Parser {
      * @return somente o símbolo ou o valor número da instrução.
      */
     public String symbol(String command) {
-    	return null;
+		return command;
+
     }
 
     /**
@@ -73,9 +90,16 @@ public class Parser {
      * @param  command instrução a ser analisada.
      * @return o símbolo da instrução (sem os dois pontos).
      */
-    public String label(String command) {
-    	return null;
-    }
+     public String label(String command) {
+     	CommandType type = commandType(command);
+     	if (type == CommandType.L_COMMAND){
+     		String symbol = command.substring(0, command.length() - 1);
+     		return symbol;
+     	}
+     	else{
+     		return null;
+     	}
+     }
 
     /**
      * Separa os mnemônicos da instrução fornecida em tokens em um vetor de Strings.
@@ -83,8 +107,23 @@ public class Parser {
      * @param  command instrução a ser analisada.
      * @return um vetor de string contento os tokens da instrução (as partes do comando).
      */
-    public String[] instruction(String command) {
-    	return null;
-    }
+     public String[] instruction(String command) {
+     	String[] parts = command.split(" ");
+     	if (parts.length <= 1){
+     		return parts;
+     	}
+     	else {
+     		String[] secondParts = parts[1].split(",");
+     		List<String> answer = new ArrayList<String>();
+     		answer.add(parts[0]);
+     		for(int i = 0; i < secondParts.length; i++){
+     			answer.add(secondParts[i]);
+     		}
+     		String[] instruction = new String[answer.size()];
+     		instruction = answer.toArray(instruction);
+     		return instruction;
+
+     	}
+     }
 
 }
