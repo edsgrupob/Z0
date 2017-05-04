@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Encapsula o código de leitura. Carrega as instruções na linguagem assembly,
@@ -31,8 +33,11 @@ public class Parser {
      * @param file arquivo NASM que será feito o parser.
      */
     public Parser(String file) {
-
-        reader = new BufferedReader(new FileReader(file));
+        try{
+            reader = new BufferedReader(new FileReader(file));
+        }catch (FileNotFoundException e){
+            System.out.println(e.getMessage());
+        }
         //idealmente o reader deveria ser fechado quando não for mais usado
         
         //advance();
@@ -47,7 +52,11 @@ public class Parser {
      * @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
      */
     public boolean advance() {
-        current= reader.readLine();
+        try{
+            current= reader.readLine();
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        }
         
         if (current==null){
 		    return false;
