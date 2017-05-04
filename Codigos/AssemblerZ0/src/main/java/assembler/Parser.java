@@ -95,7 +95,7 @@ public class Parser {
      */
     public String symbol(String command) {
         String[] parts = command.split(" ");
-        symbol= parts[1];
+        String symbol= parts[1];
         char last = symbol.charAt(symbol.length() - 1);
         if (last == ','){
             symbol = symbol.substring(0, symbol.length()-1);
