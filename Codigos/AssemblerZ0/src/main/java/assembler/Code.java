@@ -54,7 +54,94 @@ public class Code {
      * @return Opcode (String de 7 bits) com código em linguagem de máquina para a instrução.
      */
     public static String comp(String[] mnemnonic) {
-    	return null;
+    	if (mnemnonic.length == 1) {
+    		if (mnemnonic[0].equals("nop")) {
+    			return "0101010";
+    		}
+    		else {
+    			return "0001100";
+    		}
+    	}
+    	
+    	else if (mnemnonic.length == 2) {
+    		
+      		if (mnemnonic[0].equals("incw")) {
+      			return "0011111";
+      		}
+
+      		else if (mnemnonic[0].equals("decw")) {
+      			if (mnemnonic[1].equals("%A")) {
+    	  			return "0110010";
+    	  		}
+    	  		else {
+    	  			return "0001110";
+    	  		}
+    	  	}
+      		
+      		else if (mnemnonic[0].equals("notw")){
+      			if (mnemnonic[1].equals("%A")) {
+      				return "0110001";
+      			}
+      			else{
+      				return "0001101";
+      			}
+      		}
+      		else if (mnemnonic[0].equals("negw")) {
+      			if (mnemnonic[1].equals("%A")) {
+      				return "0110011";  				
+      			}
+      			else {
+      				return "0001111";
+      			}
+      		}
+      	}
+    	
+      	if (mnemnonic.length == 3){
+      		if (mnemnonic[1].equals("%D")){
+      			return "0001100";
+      		}
+      		else if (mnemnonic[1].equals("%A")){
+      			return "0110000";
+      		}
+      		else {
+      			return "1110000";
+      		}
+      	}
+      	
+      	if (mnemnonic.length == 4){
+      		if (mnemnonic[0].equals("addw")){
+      			if (mnemnonic[1].equals("%A")) {
+      				return "0000010";
+      			}
+      			else{
+      				return "1000010";
+      			}
+      		}
+      		else if (mnemnonic[0].equals("andw")) {
+      			if (mnemnonic[1].equals("%D")) {
+      				return "0000000";  				
+      			}
+      			else {
+      				return "1000000";
+      			}
+      		}
+      		else if (mnemnonic[0].equals("orw")){
+      			if (mnemnonic[1].equals("%D")) {
+    				return "0010101";  				
+      			}
+      			else {
+      				return "1010101";
+      			}
+      		}
+      		else if (mnemnonic[0].equals("subw")){
+      			return "1010011";
+      		}
+
+	  		else {
+	  			return "1000111";
+	  		}
+      	}
+      	return null;
     }
 
     /**
