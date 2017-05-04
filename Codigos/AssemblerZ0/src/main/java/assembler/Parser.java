@@ -7,6 +7,8 @@ package assembler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 /**
  * Encapsula o código de leitura. Carrega as instruções na linguagem assembly,
@@ -14,6 +16,8 @@ import java.util.List;
  * Além disso, remove todos os espaços em branco e comentários.
  */
 public class Parser {
+    private String current;
+    private BufferedReader reader;
 
     /** Enumerator para os tipos de comandos do Assembler. */
     public enum CommandType {
@@ -28,6 +32,12 @@ public class Parser {
      */
     public Parser(String file) {
 
+        reader = new BufferedReader(new FileReader(file));
+        //idealmente o reader deveria ser fechado quando não for mais usado
+        
+        //advance();
+        //imagino que deva começar carregando minha primeira instrução,
+        //mas instruções não são tão claras neste detalhe
     }
 
     /**
@@ -37,8 +47,12 @@ public class Parser {
      * @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
      */
     public boolean advance() {
-		return false;
-
+        current= reader.readLine();
+        
+        if (current==null){
+		    return false;
+	    {
+	    return true;
     }
 
     /**
@@ -46,8 +60,8 @@ public class Parser {
      * @return a instrução atual para ser analilisada
      */
     public String command() {
-		return null;
-
+    
+		return current;
     }
 
     /**
@@ -80,8 +94,19 @@ public class Parser {
      * @return somente o símbolo ou o valor número da instrução.
      */
     public String symbol(String command) {
-		return command;
-
+        String[] parts = command.split(" ");
+        symbol= parts[1];
+        char last = symbol.charAt(symbol.length() - 1);
+        if (last == ','){
+            symbol = symbol.substring(0, symbol.length()-1);
+            //acho que a vírgula pode ser separada do token por um espaço
+            //por via das dúvidas a remoção dele foi feita nesse if
+        }
+        symbol = symbol.substring(1, symbol.length());
+        //remove o $ que precede o symbol
+        
+        
+		return symbol;
     }
 
     /**
