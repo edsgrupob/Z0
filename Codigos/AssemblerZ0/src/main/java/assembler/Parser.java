@@ -5,6 +5,9 @@
 
 package assembler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Encapsula o código de leitura. Carrega as instruções na linguagem assembly,
  * analisa, e oferece acesso as partes da instrução  (campos e símbolos).
