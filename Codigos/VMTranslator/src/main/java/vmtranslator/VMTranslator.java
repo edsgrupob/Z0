@@ -28,7 +28,7 @@ class VMTranslator {
     	String outputName;
 		int i = 0;
 
-		if (args.length>0 && args[0].split(".")[1].equals(".vm")) {
+		if (args.length>0 && args[0].split(".")[1].equals("vm")) {
 			inputName = args[0];
 		}
 		
