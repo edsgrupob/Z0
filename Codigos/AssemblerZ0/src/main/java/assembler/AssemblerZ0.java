@@ -24,7 +24,7 @@ class AssemblerZ0 {
 	public int linha;
     
 	public static void main(String[] args) {
-    	parser = new Parser(args[0] + ".nasm");
+    	parser = new Parser(args[0]);
     	int linha = 0 ;
     	code = new Code();
     	
