@@ -19,18 +19,40 @@ import vmtranslator.Code;
  *   -o <arquivo nasm>    parametro indica onde será salvo o arquivo gerado .nasm
  *   -n                   parametro indica não colocar rotina de bootstrap (conveniente para testar)
  */
-class VMTranslator {
 
-	private static final String FILENAME = "<arquivo vm>";
-	private static final String OUTPUT = "<arquivo nasm>";
+class VM Translator {
 
     public static void main(String[] args) {
 
-    	Parser parser = new Parser();
-    	Code code = new Code();
+    	String inputName;
+    	String outputName;
+		int i = 0;
 
-    	//BufferedReader bufferedReader = null;
-    	//FileReader fileReader = null;
+		if args.length>0 && args[0].split(".")[1].equals(".vm"){
+			inputName = args[0];
+		}
+		
+		while(i != args.length){
+
+			if (args[i].equals("-o") && (i+2) != args.length){
+				outputName = args[i+1];
+			}
+		
+			i+=1;
+		}
+		
+		if (inputName == null){
+			System.err.println("Arquivo de entrada invalido");
+			System.exit(1);
+		}
+
+		if (outputName == null){
+			outputName = (inputName.split(".")[0]+".nasm");
+		}
+    	
+    	Parser parser = new Parser(fileName);
+    	Code code = new Code(fileName.split(".")[0]+".nasm");
+
 
     	while(parser.advance()){
 
@@ -71,59 +93,7 @@ class VMTranslator {
 
 			}
 		}
-
-
-/*
-    	try {
-    		fileReader = new FileReader(FILENAME);
-    		bufferedReader = new BufferedReader(fileReader);
-
-    		String sCurrentLine;
-
-    		bufferedReader = new BufferedReader(new FileReader(FILENAME));
-
-    		while ((sCurrentLine = br.readLine()) != null) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-    		}
-
-    	}
-
-    	catch (IOException e) {
-    		e.printStackTrace();
-    	}
-
-    	finally {
-    		
-    		try {
-    			
-    			if (bufferedReader != null) {
-    				bufferedReader.close();
-    			}
-    		
-    			if (fileReader != null) {
-    				fileReader.close();
-    			}
-    		}
-
-    		catch (IOException ex) {
-    			ex.printStackTrace();
-    		}
-    	}
-*/
     }
-
 }
 
 
