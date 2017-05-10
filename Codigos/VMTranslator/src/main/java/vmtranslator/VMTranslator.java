@@ -29,9 +29,51 @@ class VMTranslator {
     	Parser parser = new Parser();
     	Code code = new Code();
 
-    	BufferedReader bufferedReader = null;
-    	FileReader fileReader = null;
+    	//BufferedReader bufferedReader = null;
+    	//FileReader fileReader = null;
 
+    	while(parser.advance()){
+
+			switch(parser.commandType(parser.command())){
+
+					case "C_ARITHMETIC":
+						code.writeArithmetic(parser.arg1(parser.command()));
+						break;
+
+					case "C_PUSH":
+					case "C_POP":
+						code.writePushPop(parser.arg1(parser.command()),parser.arg2(parser.command()));
+						break;
+
+					case "C_LABEL":
+						code.writeLabel(parser.arg1(parser.command()));
+						break;
+
+					case "C_GOTO":
+						code.writeGoto(parser.arg1(parser.command()));
+						break;
+
+					case "C_IF":
+						code.writeIf(parser.arg1(parser.command()));
+						break;
+
+					case "C_FUNCTION":
+						code.writeFunction(parser.arg1(parser.command()),parser.arg2(parser.command()));
+						break;
+
+					case "C_RETURN":
+						code.writeReturn();
+						break;
+
+					case "C_CALL":
+						code.writeCall(parser.arg1(parser.command()),parser.arg2(parser.command()));
+						break;
+
+			}
+		}
+
+
+/*
     	try {
     		fileReader = new FileReader(FILENAME);
     		bufferedReader = new BufferedReader(fileReader);
@@ -42,8 +84,6 @@ class VMTranslator {
 
     		while ((sCurrentLine = br.readLine()) != null) {
 
-
-    			
 
 
 
@@ -81,11 +121,10 @@ class VMTranslator {
     			ex.printStackTrace();
     		}
     	}
-
+*/
     }
 
 }
-
 
 
 
