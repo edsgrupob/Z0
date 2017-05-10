@@ -67,7 +67,7 @@ public class Code {
 	    	writer.write(label + ":");
 	    	}
     	catch (IOException e) {
-    		System.out.println("writeIf error");
+    		System.out.println("writeLabel error");
     	}
     }
 
