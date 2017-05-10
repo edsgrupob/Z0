@@ -58,36 +58,36 @@ class VMTranslator {
 
 			switch(parser.commandType(parser.command())){
 
-					case "C_ARITHMETIC":
+					case parser.CommandType.C_ARITHMETIC:
 						code.writeArithmetic(parser.arg1(parser.command()));
 						break;
 
-					case "C_PUSH":
-					case "C_POP":
+					case parser.CommandType.C_PUSH:
+					case parser.CommandType.C_POP:
 						code.writePushPop(parser.arg1(parser.command()),parser.arg2(parser.command()));
 						break;
 
-					case "C_LABEL":
+					case parser.CommandType.C_LABEL:
 						code.writeLabel(parser.arg1(parser.command()));
 						break;
 
-					case "C_GOTO":
+					case parser.CommandType.C_GOTO:
 						code.writeGoto(parser.arg1(parser.command()));
 						break;
 
-					case "C_IF":
+					case parser.CommandType.C_IF:
 						code.writeIf(parser.arg1(parser.command()));
 						break;
 
-					case "C_FUNCTION":
+					case parser.CommandType.C_FUNCTION:
 						code.writeFunction(parser.arg1(parser.command()),parser.arg2(parser.command()));
 						break;
 
-					case "C_RETURN":
+					case parser.CommandType.C_RETURN:
 						code.writeReturn();
 						break;
 
-					case "C_CALL":
+					case parser.CommandType.C_CALL:
 						code.writeCall(parser.arg1(parser.command()),parser.arg2(parser.command()));
 						break;
 
