@@ -25,7 +25,7 @@ class AssemblerZ0 {
 	public static LinkedList<String> binario;
     
 	public static void main(String[] args) {
-    	parser = new Parser("src/test/resources/" + args[0] + ".nasm");
+    	parser = new Parser(args[0] + ".nasm");
     	int linha = 0 ;
     	code = new Code();
     	
@@ -36,7 +36,7 @@ class AssemblerZ0 {
     	String command;
     	
     	try{
-    	     writer = new PrintWriter("src/test/resources/" + args[0] + ".mif", "UTF-8");
+    	     writer = new PrintWriter(args[0] + ".mif", "UTF-8");
     	} catch (Exception e) {
     	   System.err.println("Algo de errado com o arquivo");
     	}
