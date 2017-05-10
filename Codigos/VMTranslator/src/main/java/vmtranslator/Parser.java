@@ -5,13 +5,23 @@
 
 package vmtranslator;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 /**
  * Encapsula o código de leitura. Carrega as instruções na linguagem de máquina virtual a pilha,
  * analisa, e oferece acesso aos comandos.
  * Além disso, remove todos os espaços em branco e comentários.
  */
-public class Parser {
 
+
+
+public class Parser {
+    String line;
+	BufferedReader br;
+	StringBuilder sb;
     /** Enumerator para os tipos de comandos de Linguagem de Máquina Virtua a Pilha. */
     public enum CommandType {
         C_ARITHMETIC,      // comandos aritméticos
@@ -28,11 +38,24 @@ public class Parser {
     /** 
      * Abre o arquivo de entrada VM e se prepara para analisá-lo.
      * @param file arquivo VM que será feito o parser.
+     * @throws FileNotFoundException 
      */
-    public Parser(String file) {
+    
 
+    public Parser(String file) throws FileNotFoundException {
+    	try(BufferedReader br = new BufferedReader(new FileReader(file))){
+//    		StringBuilder sb = new StringBuilder();
+//    		sb.append(line);
+//	        sb.append(System.lineSeparator());
+
+//    	    String everything = sb.toString();
+    	
+    	} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+    	} 
+        
     }
-
     /**
      * Carrega um comando e avança seu apontador interno para o próxima
      * linha do arquivo de entrada. Caso não haja mais linhas no arquivo de
@@ -40,7 +63,19 @@ public class Parser {
      * @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
      */
     public Boolean advance() {
-        
+    	try {
+            line = br.readLine();
+	    	if (line != null) {
+
+		        return true;
+			}
+	    	else {
+	    		return false;
+	    	}
+    	} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         return null;
 
     }
@@ -50,8 +85,7 @@ public class Parser {
      * @return a instrução atual para ser analilisada
      */
     public String command() {
-
-        return null;
+        return line;
 
     }
 
