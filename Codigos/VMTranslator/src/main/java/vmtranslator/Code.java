@@ -5,17 +5,27 @@
 
 package vmtranslator;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 /** 
  * Traduz da linguagem vm para códigos assembly.
  */
 public class Code {
-
+	private BufferedWriter writer;
     /** 
      * Abre o arquivo de entrada VM e se prepara para analisá-lo.
      * @param filename nome do arquivo VM que será feito o parser.
+     * @throws IOException 
      */
-    public Code(String filename) {
-
+	public Code(String filename) throws IOException {
+    	try{
+            writer = new BufferedWriter(new FileWriter(filename));
+        }catch (FileNotFoundException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -59,7 +69,7 @@ public class Code {
      * @param  label define jump a ser realizado para um label (marcador).
      */
     public void writeGoto(String label) {
-
+    	//file.write("leaw %" + label + ", %A");
     }
 
     /**
@@ -68,7 +78,14 @@ public class Code {
      * @param  label define jump a ser realizado para um label (marcador).
      */
     public void writeIf(String label) {
-
+    	try {
+	    	writer.write("leaw %" + label + ", %A");
+	    	writer.write("jne");
+	    	writer.write("nop");
+	    	}
+    	catch (IOException e) {
+    		System.out.println("writeIf error");
+    	}
     }
 
     /**
