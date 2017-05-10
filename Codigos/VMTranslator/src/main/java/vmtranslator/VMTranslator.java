@@ -20,7 +20,7 @@ import vmtranslator.Code;
  *   -n                   parametro indica não colocar rotina de bootstrap (conveniente para testar)
  */
 
-class VM Translator {
+class VMTranslator {
 
     public static void main(String[] args) {
 
@@ -28,7 +28,7 @@ class VM Translator {
     	String outputName;
 		int i = 0;
 
-		if args.length>0 && args[0].split(".")[1].equals(".vm"){
+		if (args.length>0 && args[0].split(".")[1].equals(".vm")) {
 			inputName = args[0];
 		}
 		
@@ -50,8 +50,8 @@ class VM Translator {
 			outputName = (inputName.split(".")[0]+".nasm");
 		}
     	
-    	Parser parser = new Parser(fileName);
-    	Code code = new Code(fileName.split(".")[0]+".nasm");
+    	Parser parser = new Parser(inputName);
+    	Code code = new Code(outputName);
 
 
     	while(parser.advance()){
