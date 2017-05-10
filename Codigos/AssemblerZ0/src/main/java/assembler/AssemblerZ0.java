@@ -22,7 +22,6 @@ class AssemblerZ0 {
 	public static Code  code;
 	public static SymbolTable symbol_table;
 	public int linha;
-	public static LinkedList<String> binario;
     
 	public static void main(String[] args) {
     	parser = new Parser(args[0] + ".nasm");
@@ -46,15 +45,12 @@ class AssemblerZ0 {
     	
     	
     	while(parser.advance()){
-    		
-    		binario = new LinkedList<String>();
 
     		if (parser.commandType(parser.command()) == CommandType.C_COMMAND){
     			linha++;
     			command = ("111" + Code.comp(parser.instruction(parser.command())) + Code.dest(parser.instruction(parser.command())));
     			if (writer != null){
     			writer.println(command);
-    			binario.add(command);
     		}}
     		else if (parser.commandType(parser.command()) == CommandType.A_COMMAND){
     			linha++;
@@ -69,7 +65,6 @@ class AssemblerZ0 {
     			}
     			if (writer != null){
     				writer.println("0" + Code.toBinary(command));
-    				binario.add(("0" + Code.toBinary(command)));
     			}
     		}
     	}
