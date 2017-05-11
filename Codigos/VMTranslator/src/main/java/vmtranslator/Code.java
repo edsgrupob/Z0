@@ -10,6 +10,8 @@ import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import vmtranslator.Parser.CommandType;
+
 /** 
  * Traduz da linguagem vm para códigos assembly.
  */
@@ -34,9 +36,18 @@ public class Code {
     /**
      * Grava no arquivo de saida as instruções em Assembly para executar o comando aritmético.
      * @param  command comando aritmético a ser analisado.
+     * @throws IOException 
      */
-    public void writeArithmetic(String command) {
-
+    public void writeArithmetic(String command) throws IOException {
+    	try {
+	    	if(command.equals("add")){
+	    		writer.write("leaw $SP, %A");
+	    		writer.write("movw (%A), %A");
+	    	}
+    	}
+    	catch (IOException e) {
+    		System.out.println("writePushPop error");
+    	} 
     }
 
     /**
@@ -44,9 +55,57 @@ public class Code {
      * @param  command comando de push ou pop a ser analisado.
      * @param  segment segmento de memória a ser usado pelo comando.
      * @param  index índice do segkento de memória a ser usado pelo comando.
+     * @throws IOException 
      */
-    public void writePushPop(Parser.CommandType command, String segment, Integer index) {
-
+    public void writePushPop(Parser.CommandType command, String segment, Integer index) throws IOException {
+    	try {
+	    	if (segment.equals("local")){
+	    		segment = "1";
+	    	}
+	    	if (segment.equals("argument")){
+	    		segment = "2";
+	    	}
+	    	if (segment.equals("this")){
+	    		segment = "3";
+	    	}
+	    	if (segment.equals("that")) {
+	    		segment = "4";
+	    	}
+	    	
+	    	
+	    	if(command.equals(CommandType.C_PUSH)){
+	    		writer.write("leaw $segment , %A");
+	    		writer.write("movw (%A) , %A");
+	    		for (int i = 0; i<index; i++){
+	    			writer.write("incw %A");
+	    		}
+	    		writer.write("movw (%A) , %D");
+	    		writer.write("leaw $0 , %A");
+	    		writer.write("movw (%A) , %A");
+	    		writer.write("movw %D , (%A)");
+	    		writer.write("incw %A");
+	    		writer.write("movw %A , %D");
+	    		writer.write("leaw $0 , %A");
+	    		writer.write("movw %D , (%A)");
+	    	}
+	    	else if(command.equals(CommandType.C_POP)){
+	    		writer.write("leaw $0, %A");
+	    		writer.write("movw (%A) , %D");
+	    		writer.write("subw %D , $1 , %D");
+	    		writer.write("movw %D , (%A)");
+	    		writer.write("movw %D, %A");
+	    		writer.write("movw (%A) , %D");
+	    		writer.write("leaw $segment , %A");
+	    		writer.write("movw (%A) , %A");
+	    		for (int i = 0; i<index; i++){
+	    			writer.write("incw %A");
+	    		}
+	    		writer.write("movw %D , (%A)");
+	    	}
+	    }
+    	catch (IOException e) {
+    		System.out.println("writePushPop error");
+    	}
     }
 
     /**
@@ -55,7 +114,16 @@ public class Code {
      * O código deve ser colocado no início do arquivo de saída.
      */
     public void writeInit() {
-
+    	try {
+	    	writer.write("leaw $256, %A");
+	    	writer.write("movw %A, %D");
+	    	writer.write("leaw $SP, %A");
+	    	writer.write("movw (%A), %A");
+	    	writer.write("movw %A, %D");
+	    	}
+    	catch (IOException e) {
+    		System.out.println("writeInit error");
+    	}
     }
 
     /**
@@ -116,7 +184,13 @@ public class Code {
      * Grava no arquivo de saida as instruções em Assembly para o retorno de uma sub rotina.
      */
     public void writeReturn() {
-
+    	try {
+	    	writer.write("movw %A, %D");
+	    	writer.write("ret");
+	    	}
+    	catch (IOException e) {
+    		System.out.println("writeReturn error");
+    	}
     }
 
     /**
