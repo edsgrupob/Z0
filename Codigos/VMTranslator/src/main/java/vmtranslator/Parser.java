@@ -102,28 +102,28 @@ public class Parser {
      */
     public CommandType commandType(String command) {
     	String[] parts = command.split(" ");
-    	if(parts[0] == "push"){
+    	if(parts[0].equals("push")){
     		return CommandType.C_PUSH;
     	}
-    	if(parts[0] == "pop"){
+    	if(parts[0].equals("pop")){
     		return CommandType.C_POP;
     	}
-    	if(parts[0] == "label"){
+    	if(parts[0].equals("label")){
     		return CommandType.C_LABEL;
     	}
-    	if(parts[0] == "goto"){
+    	if(parts[0].equals("goto")){
     		return CommandType.C_GOTO;
     	}
-    	if(parts[0] == "if-goto9"){
+    	if(parts[0].equals("if-goto")){
     		return CommandType.C_IF;
     	}
-    	if(parts[0] == "function"){
+    	if(parts[0].equals("function")){
     		return CommandType.C_FUNCTION;
     	}
-    	if(parts[0] == "return"){
+    	if(parts[0].equals("return")){
     		return CommandType.C_RETURN;
     	}
-    	if(parts[0] == "call"){
+    	if(parts[0].equals("call")){
     		return CommandType.C_CALL;
     	}
     	else{
@@ -141,13 +141,14 @@ public class Parser {
      */
     public String arg1(String command) {
     	String[] partes = command.split(" ");
-    	if(!command.equals(CommandType.C_RETURN) ){    	
-	    	if(command.equals(CommandType.C_ARITHMETIC)){
-	    		return partes[0];}
+    	if(commandType(command) != CommandType.C_RETURN) {	
+	    	if(commandType(command) == CommandType.C_ARITHMETIC){
+	    		return command;}
 	    	else{
-	    		return partes[1];
+	    		return command.split(" ")[1];	
 	    	}
-    	}
+    }
+    
     	return null;
     }
 
