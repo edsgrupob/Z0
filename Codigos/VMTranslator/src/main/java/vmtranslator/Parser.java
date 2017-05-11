@@ -114,7 +114,7 @@ public class Parser {
     	if(parts[0] == "goto"){
     		return CommandType.C_GOTO;
     	}
-    	if(parts[0] == "if"){
+    	if(parts[0] == "if-goto9"){
     		return CommandType.C_IF;
     	}
     	if(parts[0] == "function"){
