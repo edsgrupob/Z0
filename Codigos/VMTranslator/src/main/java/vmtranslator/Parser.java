@@ -158,23 +158,6 @@ public class Parser {
      * @return o símbolo da instrução (sem os dois pontos).
      */
     public Integer arg2(String command) {
-    	String[] partess = command.split(" ");  	
-    	if(command.equals(CommandType.C_PUSH)){
-    		String a = partess[2].toString();
-    		
-    		return partess[2];
-    		}
-    	if(command.equals(CommandType.C_POP)){
-    		return partess[2];
-    		}
-    	if(command.equals(CommandType.C_FUNCTION)){
-    		return partess[2];
-    		}
-    	if(command.equals(CommandType.C_CALL)){
-    		return partess[2];
-    		}
-        return null;
-
+    	return Integer.parseInt(command.split(" ")[2]);
     }
-
 }
