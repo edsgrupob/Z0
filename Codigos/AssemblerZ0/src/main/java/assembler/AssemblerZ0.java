@@ -35,7 +35,7 @@ class AssemblerZ0 {
     	String command;
     	
     	try{
-    	     writer = new PrintWriter(args[0] + ".mif", "UTF-8");
+    	     writer = new PrintWriter(args[0], "UTF-8");
     	} catch (Exception e) {
     	   System.err.println("Algo de errado com o arquivo");
     	}
