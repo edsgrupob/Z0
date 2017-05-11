@@ -22,7 +22,9 @@ public class Parser {
     String line;
 	BufferedReader br;
 	StringBuilder sb;
+	String tipoComando;
     /** Enumerator para os tipos de comandos de Linguagem de Máquina Virtua a Pilha. */
+	
     public enum CommandType {
         C_ARITHMETIC,      // comandos aritméticos
         C_PUSH,            // comandos de push
@@ -34,6 +36,8 @@ public class Parser {
         C_RETURN,          // 
         C_CALL             // 
     }
+    
+  
 
     /** 
      * Abre o arquivo de entrada VM e se prepara para analisá-lo.
@@ -97,9 +101,34 @@ public class Parser {
      * @return o tipo da instrução.
      */
     public CommandType commandType(String command) {
-
-        return null;
-
+    	String[] parts = command.split(" ");
+    	if(parts[0] == "push"){
+    		return CommandType.C_PUSH;
+    	}
+    	if(parts[0] == "pop"){
+    		return CommandType.C_POP;
+    	}
+    	if(parts[0] == "label"){
+    		return CommandType.C_LABEL;
+    	}
+    	if(parts[0] == "goto"){
+    		return CommandType.C_GOTO;
+    	}
+    	if(parts[0] == "if"){
+    		return CommandType.C_IF;
+    	}
+    	if(parts[0] == "function"){
+    		return CommandType.C_FUNCTION;
+    	}
+    	if(parts[0] == "return"){
+    		return CommandType.C_RETURN;
+    	}
+    	if(parts[0] == "call"){
+    		return CommandType.C_CALL;
+    	}
+    	else{
+        return CommandType.C_ARITHMETIC;
+    	}
     }
     
 
@@ -111,9 +140,15 @@ public class Parser {
      * @return somente o símbolo ou o valor número da instrução.
      */
     public String arg1(String command) {
-
-        return null;
-
+    	String[] partes = command.split(" ");
+    	if(!command.equals(CommandType.C_RETURN) ){    	
+	    	if(command.equals(CommandType.C_ARITHMETIC)){
+	    		return partes[0];}
+	    	else{
+	    		return partes[1];
+	    	}
+    	}
+    	return null;
     }
 
     /**
@@ -123,7 +158,21 @@ public class Parser {
      * @return o símbolo da instrução (sem os dois pontos).
      */
     public Integer arg2(String command) {
-
+    	String[] partess = command.split(" ");  	
+    	if(command.equals(CommandType.C_PUSH)){
+    		String a = partess[2].toString();
+    		
+    		return partess[2];
+    		}
+    	if(command.equals(CommandType.C_POP)){
+    		return partess[2];
+    		}
+    	if(command.equals(CommandType.C_FUNCTION)){
+    		return partess[2];
+    		}
+    	if(command.equals(CommandType.C_CALL)){
+    		return partess[2];
+    		}
         return null;
 
     }
