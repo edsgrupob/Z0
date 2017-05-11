@@ -25,7 +25,7 @@ class AssemblerZ0 {
     
 	public static void main(String[] args) {
     	parser = new Parser(args[0]);
-    	int linha = 0 ;
+    	int linha = 0;
     	code = new Code();
     	
     	symbol_table = new SymbolTable();
@@ -34,9 +34,11 @@ class AssemblerZ0 {
     	
     	String command;
     	
-    	try{
-    	     writer = new PrintWriter(args[0], "UTF-8");
-    	} catch (Exception e) {
+    	try {
+    	     writer = new PrintWriter(args[0] + "_ext", "UTF-8");
+    	}
+    	
+    	catch (Exception e) {
     	   System.err.println("Algo de errado com o arquivo");
     	}
     
@@ -49,21 +51,23 @@ class AssemblerZ0 {
     		if (parser.commandType(parser.command()) == CommandType.C_COMMAND){
     			linha++;
     			command = ("111" + Code.comp(parser.instruction(parser.command())) + Code.dest(parser.instruction(parser.command())));
-    			if (writer != null){
+    			if (writer != null) {
     			writer.println(command);
-    		}}
-    		else if (parser.commandType(parser.command()) == CommandType.A_COMMAND){
+    			}
+    		}
+    		
+    		else if (parser.commandType(parser.command()) == CommandType.A_COMMAND) {
     			linha++;
     			System.out.println(parser.command());
     			
-    			try{
+    			try {
     				Integer.parseInt(parser.symbol(parser.command()));
     				command= parser.symbol(parser.command());
     			}
-    			catch(Exception e){
+    			catch(Exception e) {
     				command= Integer.toString(symbol_table.getAddress(parser.symbol(parser.command())));
     			}
-    			if (writer != null){
+    			if (writer != null) {
     				writer.println("0" + Code.toBinary(command));
     			}
     		}
@@ -77,8 +81,7 @@ class AssemblerZ0 {
 		writer.println("END;");
     	if (writer!=null){
     		writer.close();
-    }
-  }
-   
+    	}
+	}
 }
 	
