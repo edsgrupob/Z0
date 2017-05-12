@@ -46,18 +46,7 @@ public class Parser {
      */
     
 
-    public Parser(String file) throws FileNotFoundException {
-    	try(BufferedReader br = new BufferedReader(new FileReader(file))){
-//    		StringBuilder sb = new StringBuilder();
-//    		sb.append(line);
-//	        sb.append(System.lineSeparator());
-
-//    	    String everything = sb.toString();
-    	
-    	} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-    	} 
+    public Parser(String file) {
         
     }
     /**
@@ -67,19 +56,6 @@ public class Parser {
      * @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
      */
     public Boolean advance() {
-    	try {
-            line = br.readLine();
-	    	if (line != null) {
-
-		        return true;
-			}
-	    	else {
-	    		return false;
-	    	}
-    	} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
         return null;
 
     }
@@ -139,16 +115,7 @@ public class Parser {
      * @param  command instrução a ser analisada.
      * @return somente o símbolo ou o valor número da instrução.
      */
-    public String arg1(String command) {
-    	String[] partes = command.split(" ");
-    	if(commandType(command) != CommandType.C_RETURN) {	
-	    	if(commandType(command) == CommandType.C_ARITHMETIC){
-	    		return command;}
-	    	else{
-	    		return command.split(" ")[1];	
-	    	}
-    }
-    
+    public String arg1(String command) {    
     	return null;
     }
 
