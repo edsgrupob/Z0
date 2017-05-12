@@ -11,15 +11,15 @@ import java.io.PrintWriter;
 import java.util.LinkedList;
 
 /**
- * Classe principal que orquestra execuÃ§Ã£o do Assembler.
- * OpÃ§Ãµes:
- *   <arquivo nasm>      primeiro parametro Ã© o nome do arquivo nasm a ser aberto 
- *   -f <arquivo mif>    parametro indica onde serÃ¡ salvo o arquivo gerado .mif
+ * Classe principal que orquestra execução do Assembler.
+ * Opções:
+ *   <arquivo nasm>      primeiro parametro é o nome do arquivo nasm a ser aberto 
+ *   -f <arquivo mif>    parâmetro indica onde será salvo o arquivo gerado .mif
  */
 class AssemblerZ0 {
 	
 	public static Parser parser;
-	public static Code  code;
+	public static Code code;
 	public static SymbolTable symbol_table;
 	public int linha;
     
@@ -31,11 +31,11 @@ class AssemblerZ0 {
     	symbol_table = new SymbolTable();
     	
     	PrintWriter writer = null;
-    	
+
     	String command;
     	
     	try {
-    	     writer = new PrintWriter(args[0] + "_ext", "UTF-8");
+    	     writer = new PrintWriter(args[0]);
     	}
     	
     	catch (Exception e) {
@@ -46,9 +46,9 @@ class AssemblerZ0 {
     	
     	
     	
-    	while(parser.advance()){
+    	while(parser.advance()) {
 
-    		if (parser.commandType(parser.command()) == CommandType.C_COMMAND){
+    		if (parser.commandType(parser.command()) == CommandType.C_COMMAND) {
     			linha++;
     			command = ("111" + Code.comp(parser.instruction(parser.command())) + Code.dest(parser.instruction(parser.command())));
     			if (writer != null) {
@@ -62,10 +62,10 @@ class AssemblerZ0 {
     			
     			try {
     				Integer.parseInt(parser.symbol(parser.command()));
-    				command= parser.symbol(parser.command());
+    				command = parser.symbol(parser.command());
     			}
     			catch(Exception e) {
-    				command= Integer.toString(symbol_table.getAddress(parser.symbol(parser.command())));
+    				command = Integer.toString(symbol_table.getAddress(parser.symbol(parser.command())));
     			}
     			if (writer != null) {
     				writer.println("0" + Code.toBinary(command));
@@ -73,13 +73,13 @@ class AssemblerZ0 {
     		}
     	}
     	writer.println("");
-    	writer.println("WIDTH=16;");
-    	writer.println("DEPTH=" + linha +";");
+    	writer.println("WIDTH = 16;");
+    	writer.println("DEPTH =" + linha +";");
     	writer.println("");
-    	writer.println("ADDRESS_RADIX=UNS;");
-    	writer.println("DATA_RADIX=BIN;");
+    	writer.println("ADDRESS_RADIX = UNS;");
+    	writer.println("DATA_RADIX = BIN;");
 		writer.println("END;");
-    	if (writer!=null){
+    	if (writer!=null) {
     		writer.close();
     	}
 	}
