@@ -8,13 +8,12 @@ package assembler;
 import assembler.Parser.CommandType;
 
 import java.io.PrintWriter;
-import java.util.LinkedList;
 
 /**
- * Classe principal que orquestra execução do Assembler.
- * Opções:
- *   <arquivo nasm>      primeiro parametro é o nome do arquivo nasm a ser aberto 
- *   -f <arquivo mif>    parametro indica onde será salvo o arquivo gerado .mif
+ * Classe principal que orquestra execuÃ§Ã£o do Assembler.
+ * OpÃ§Ãµes:
+ *   <arquivo nasm>      primeiro parametro Ã© o nome do arquivo nasm a ser aberto 
+ *   -f <arquivo mif>    parametro indica onde serÃ¡ salvo o arquivo gerado .mif
  */
 class AssemblerZ0 {
 	
@@ -28,7 +27,6 @@ class AssemblerZ0 {
     	int linha = 0 ;
     	code = new Code();
     	
-    	symbol = parser.getSymbolTable();
     	PrintWriter writer = null;
     	String command;
     	
