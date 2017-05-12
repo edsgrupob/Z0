@@ -28,7 +28,7 @@ class AssemblerZ0 {
     	int linha = 0 ;
     	code = new Code();
     	
-    	symbol_table = parser.getSymbolTable();
+    	symbol = parser.getSymbolTable();
     	PrintWriter writer = null;
     	String command;
     	
