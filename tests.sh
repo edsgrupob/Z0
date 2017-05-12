@@ -42,22 +42,37 @@ mvn-color()
   echo -ne ${RESET_FORMATTING}
 }
 
+let "n_error=0"
 
 # Testes para VHDL
 python TestesHW/run.py -p3
+let "n_error+=$?"
 
 # Testes para codigos em Assembly
 python TestesSW/assembler.py -t TestesSW/testesAssembly.txt -in Codigos/Assembly/ -out TestesSW/machine_code/ -p 3
-python TestesSW/emulate.py -t TestesSW/testesAssembly.txt -in TestesSW/testesAssembly/ -out TestesSW/machine_code/ -p 3
+let "n_error+=$?"
+python TestesSW/emulate.py -t TestesSW/testesAssembly.txt -in TestesSW/testesAssembly/ -out TestesSW/machine_code/ -p 3 -r 512,256
+let "n_error+=$?"
 python -m pytest -v TestesSW/testeAssembly.py -rxs
+let "n_error+=$?"
 
 # Testes para AssemblerZ0
 mvn-color -f Codigos/AssemblerZ0 package
+let "n_error+=$?"
 python -m pytest -v TestesSW/testeAssembler.py -rxs
+let "n_error+=$?"
 
 # Testes para o VMTranslator
 mvn-color -f Codigos/VMTranslator package
+let "n_error+=$?"
 python TestesSW/vmtranslator.py -t TestesSW/testesVMTranslator.txt -in Codigos/VMTranslator/src/test/resources/ -out TestesSW/machine_code/ -p 3
+let "n_error+=$?"
 python TestesSW/assembler.py -t TestesSW/testesVMTranslator.txt -in TestesSW/machine_code/ -out TestesSW/machine_code/ -p 3
+let "n_error+=$?"
 python TestesSW/emulate.py -t TestesSW/testesVMTranslator.txt -in TestesSW/testesVMTranslator/ -out TestesSW/machine_code/ -p 3
+let "n_error+=$?"
 python -m pytest -v TestesSW/testeVMTranslator.py -rxs
+let "n_error+=$?"
+
+exit $n_error
+

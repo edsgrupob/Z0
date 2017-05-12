@@ -12,7 +12,7 @@ public class Code {
 
     /** 
      * Abre o arquivo de entrada VM e se prepara para analisá-lo.
-     * @param filename nome do arquivo VM que será feito o parser.
+     * @param filename nome do arquivo NASM que receberá o código traduzido.
      */
     public Code(String filename) {
 
