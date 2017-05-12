@@ -60,7 +60,6 @@ class AssemblerZ0 {
     			}
     		}
     	}
-    	writer.println("");
 		writer.println("END;");
     	writer.println("WIDTH=16;");
     	writer.println("DEPTH=" + linha +";");
