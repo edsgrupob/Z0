@@ -42,22 +42,42 @@ public class Parser {
     /** 
      * Abre o arquivo de entrada VM e se prepara para analisá-lo.
      * @param file arquivo VM que será feito o parser.
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException vai verificar se o arquivo existe com try/catch
      */
     
 
-    public Parser(String file) {
-        
+    public Parser(String file) throws FileNotFoundException {
+    	
+        try(BufferedReader br = new BufferedReader(new FileReader(file))){
+        	
+        } catch (Exception e) {
+        	
+        	e.printStackTrace();
+        }
     }
     /**
      * Carrega um comando e avança seu apontador interno para o próxima
      * linha do arquivo de entrada. Caso não haja mais linhas no arquivo de
      * entrada o método retorna "Falso", senão retorna "Verdadeiro".
      * @return Verdadeiro se ainda há instruções, Falso se as instruções terminaram.
+     * variavel line verifica se ainda há linhas para ler, se for igual a null retorna false
      */
     public Boolean advance() {
+    	
+    	try {
+    		line = br.readLine();
+    		
+    		if (line != null) {
+    			return true;
+    			
+    		} else {
+    			return false;
+    		}
+    		
+    	} catch (Exception e) {	
+    		e.printStackTrace();
+    	}
         return null;
-
     }
 
     /**
@@ -114,8 +134,24 @@ public class Parser {
      * Deve ser chamado somente quando commandType() é diferente de C_RETURN.
      * @param  command instrução a ser analisada.
      * @return somente o símbolo ou o valor número da instrução.
+     * split é uma lista com os comandos
+     * se nao for um comando aritmetico arg1 retorna o primeiro argumento do comando (split[1])
      */
     public String arg1(String command) {    
+    	
+    	String[] split = command.split(" ");
+    	
+    	if(commandType(command) != CommandType.C_RETURN){
+    		
+    		if(commandType(command) == CommandType.C_ARITHMETIC) {
+    			
+    			return command;
+    			
+    		} else {
+    			
+    			return split[1];
+    		}
+    	}
     	return null;
     }
 
