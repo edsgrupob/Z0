@@ -41,15 +41,13 @@ class AssemblerZ0 {
     	while(parser.advance()){
 
     		if (parser.commandType(parser.command()) == CommandType.C_COMMAND){
-    			linha++;
     			command = (linha + " : " + "111" + Code.comp(parser.instruction(parser.command())) + Code.dest(parser.instruction(parser.command())) + Code.jump(parser.instruction(parser.command())));
+    			linha++;
     			if (writer != null){
     			writer.println(command);
     		}}
     		else if (parser.commandType(parser.command()) == CommandType.A_COMMAND){
     			linha++;
-    			System.out.println(parser.command());
-    			
     			try{
     				Integer.parseInt(parser.symbol(parser.command()));
     				command= parser.symbol(parser.command());
