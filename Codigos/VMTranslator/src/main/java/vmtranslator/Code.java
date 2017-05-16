@@ -18,8 +18,10 @@ import vmtranslator.Parser.CommandType;
  */
 public class Code {	
 	private BufferedWriter writer;
-	private String inputfile;
-	
+	private String inputFile;
+	private String label;
+	String funcName;
+	private Integer count;
     /** 
      * Abre o arquivo de entrada VM e se prepara para analisá-lo.
      * @param filename nome do arquivo VM que será feito o parser.
@@ -211,22 +213,50 @@ public class Code {
     public void writePushPop(Parser.CommandType command, String segment, Integer index) throws IOException {
     	try {
 	    	if (segment.equals("local")){
-	    		segment = "1";
+	    		segment = "LCL";
 	    	}
 	    	if (segment.equals("argument")){
-	    		segment = "2";
+	    		segment = "ARG";
 	    	}
 	    	if (segment.equals("this")){
-	    		segment = "3";
+	    		segment = "THIS";
 	    	}
 	    	if (segment.equals("that")) {
-	    		segment = "4";
+	    		segment = "THAT";
 	    	}
-	    	if (segment.equals("constant")) {
-	    		segment = index.toString();
-	    	}
+            if (segment.equals("pointer")){
+                if (index == 0){
+                  writer.write("leaw $SP, %A");
+                  writer.write("movw (%A), %D");
+                  writer.write("subw %D, $1, %D");
+                  writer.write("movw %D, (%A)");
+                  writer.write("movw %D, %A");
+                  writer.write("movw (%A), %D");
+                  writer.write("leaw $THIS, %A");
+                  writer.write("movw %D, %A");
+                }
+                if (index == 1){
+                  writer.write("leaw $SP, %A");
+                  writer.write("movw (%A), %D");
+                  writer.write("subw %D, $1, %D");
+                  writer.write("movw %D, (%A)");
+                  writer.write("movw %D, %A");
+                  writer.write("movw (%A), %D");
+                  writer.write("leaw $THAT, %A");
+                  writer.write("movw %D, %A");
+                }  
+            }
+	    	if (segment.equals("constant")){
+            	segment = index.toString();
+            	writer.write(String.format("leaw $%s, %A", segment));
+            	writer.write("movw %A, %D");
+            	writer.write("leaw $SP, %A");
+            	writer.write("movw (%A), %A");
+            	writer.write("movw %D, (%A)");
+            }
+          
 	    	
-	    	if(command.equals(CommandType.C_PUSH)){
+	    	if(command.equals(CommandType.C_PUSH) && segment != index.toString()){
 	    		writer.write(String.format("leaw $%s , %A", segment));
 	    		writer.write("movw (%A) , %A");
 	    		for (int i = 0; i<index; i++){
@@ -238,10 +268,10 @@ public class Code {
 	    		writer.write("movw %D , (%A)");
 	    		writer.write("incw %A");
 	    		writer.write("movw %A , %D");
-	    		writer.write("leaw $0 , %A");
+	    		writer.write("leaw $SP , %A");
 	    		writer.write("movw %D , (%A)");
 	    	}
-	    	else if(command.equals(CommandType.C_POP)){
+	    	else if(command.equals(CommandType.C_POP) && segment!= index.toString()){
 	    		writer.write("leaw $0, %A");
 	    		writer.write("movw (%A) , %D");
 	    		writer.write("subw %D , $1 , %D");
@@ -332,16 +362,51 @@ public class Code {
      * @throws IOException 
      */
     public void writeCall(String functionName, Integer numArgs) throws IOException {
-    	//push return adresss
-    	writePushPop(CommandType.C_PUSH, "local", 0);
-    	for (int i = 0; i < numArgs; i ++){
-    		writePushPop(CommandType.C_PUSH, "argument", i);
-    	}
-    	writePushPop(CommandType.C_PUSH, "this", 0);
-    	writePushPop(CommandType.C_PUSH, "that", 0);
-    	for (int i = 0; i < numArgs; i ++){
-    		writePushPop(CommandType.C_PUSH, "argument", i);
-    	}
+		label = String.format("%s_return-address_%s", this.funcName, count);
+	
+		writer.write(String.format("leaw $%s , %A", label));
+        writer.write("movw %A , %D");
+        writer.write("leaw $SP , %A");
+        writer.write("movw %D , (%A)");
+	
+		writer.write("leaw $SP , %A");
+	    writer.write("movw (%A) , %A");
+	    writer.write("movw %A , %D");
+	    writer.write(String.format("leaw $%s , %A", functionName));
+	    writer.write("%A , (%D)");
+	    
+	    writer.write(String.format("leaw $%s, %A", functionName));
+	    writer.write("movw %A, %D");
+	    writer.write("leaw $SP, %A");
+	    writer.write("movw (%A), %A");
+	    writer.write("movw %D, (%A)");
+	
+	    writePushPop(CommandType.C_PUSH, "local", 0);
+	    writePushPop(CommandType.C_PUSH, "argument", 0);
+	    writePushPop(CommandType.C_PUSH, "this", 0);
+	    writePushPop(CommandType.C_PUSH, "that", 0);
+	
+	    writer.write("leaw $0, %A");
+	    writer.write("movw (%A) , %D");
+	    writer.write("leaw $numArg, %A");
+	    writer.write("subw %D, %A, %D");
+	    writer.write("leaw $5, %A");
+	    writer.write("subw %D, %A, %D");
+	    writer.write("leaw $ARG, %A");
+	    writer.write("movw %D, (%A)");
+	
+	    
+	    writer.write("leaw $LCL, %A");
+	    writer.write("movw (%A), %D");
+	    writer.write("leaw $LCL, %A");
+	    writer.write("movw %D, (%A)");
+	
+	    writer.write(String.format("leaw $%s, %A", functionName));
+	    writer.write("jmp");
+	
+	    writeLabel(label);
+	
+	    count = count+1;
     }
 
     /**
@@ -349,8 +414,46 @@ public class Code {
      */
     public void writeReturn() {
     	try {
-	    	writer.write("movw %A, %D");
-	    	writer.write("ret");
+    		writer.write("leaw $LCL, %A");
+    		writer.write("movw (%A), %D");
+    		writer.write("leaw $5, %A");		//FRAME = LCL
+    		writer.write("movw %D, (%A)");
+    		
+    		writer.write("leaw $5, %A");
+    		writer.write("subw (%A), $5, %D");
+    		writer.write("leaw $6, %A");		//RET = *(FRAME-5)
+    		writer.write("movw %D, (%A)");
+    		
+    		writePushPop(CommandType.C_POP, "argument", 0);		//*ARG = pop()
+    		
+    		writer.write("leaw $ARG, %A");
+    		writer.write("addw (%A), $1, %D");
+    		writer.write("leaw %SP, %A");		//SP = ARG+1
+    		writer.write("movw %D, (%A)");
+    		
+    		writer.write("leaw $5, %A");
+    		writer.write("subw (%A), $1, %D");
+    		writer.write("leaw $THAT, %A");		//THAT = *(FRAME-1)
+    		writer.write("movw %D, (%A)");
+    		
+    		writer.write("leaw $5, %A");
+    		writer.write("subw (%A), $2, %D");
+    		writer.write("leaw $THIS, %A");		//THIS = *(FRAME-2)
+    		writer.write("movw %D, (%A)");
+    		
+    		writer.write("leaw $5, %A");
+    		writer.write("subw (%A), $3, %D");
+    		writer.write("leaw $ARG, $A");		//ARG = *(FRAME-3)
+    		writer.write("movw %D, (%A)");
+    		
+    		writer.write("leaw $5, %A");
+    		writer.write("subw (%A), $4, %D");
+    		writer.write("leaw $LCL, %A");		//LCL = *(FRAME-4)
+    		writer.write("movw %D, (%A)");
+    		
+    		writer.write("leaw $6, %A");
+    		writer.write("movw (%A), %A");		//goto RET
+    		writer.write("jmp");
 	    	}
     	catch (IOException e) {
     		System.out.println("writeReturn error");
@@ -377,7 +480,7 @@ public class Code {
      * @param  filename nome do arquivo sendo tratado.
      */
     public void vmfile(String file) {
-    	inputfile = file;
+    	inputFile = file;
     }
 
 }
