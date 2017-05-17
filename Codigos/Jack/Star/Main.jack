@@ -7,15 +7,32 @@
 class Main {
 
     function void main() {
-    
+
         // Exemplo de chamada para subrotina
         do Main.drawStar(160, 120, 30);
-        
+
         return;
     }
-    
+
     /** Desenha uma estrela na tela. */
     function void drawStar(int x, int y, int d) {
+        var int half;
+        var int quarter;
+        let half = Math.divide(d,2);
+        let quarter = Math.divide(d,4);
+        /** Lado esquerdo. */
+        do Screen.drawLine(x, y-d-half, x-quarter, y-d);
+        do Screen.drawLine(x-quarter, y-d, x-quarter-d, y-d);
+        do Screen.drawLine(x-quarter-d, y-d, x-half, y-half);
+        do Screen.drawLine(x-half, y-half, x-half-quarter, y+quarter);
+        do Screen.drawLine(x-half-quarter, y+quarter, x, y);
+
+        /** Lado direito. */
+        do Screen.drawLine(x, y-d-half, x+quarter, y-d);
+        do Screen.drawLine(x+quarter, y-d, x+quarter+d, y-d);
+        do Screen.drawLine(x+quarter+d, y-d, x+half, y-half);
+        do Screen.drawLine(x+half, y-half, x+half+quarter, y+quarter);
+        do Screen.drawLine(x+half+quarter, y+quarter, x, y);
         return;
     }
 
