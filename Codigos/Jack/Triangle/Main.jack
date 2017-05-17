@@ -7,15 +7,25 @@
 class Main {
 
     function void main() {
-    
+
         // Exemplo de chamada para subrotina
-        do Main.drawTriangle(160, 120, 30);
-        
+        do Main.drawTriangle(160, 120, 100);
+
         return;
     }
-    
+
     /** Desenha uma triangulo na tela. */
     function void drawTriangle(int x, int y, int d) {
+        //pontos: (x,y), (d/2, d*raiz3/2) e (x+d,y)
+        var int e;
+        var int raiz;
+        var int divisao;
+        let e = Math.divide(d,2);
+        let raiz = Math.sqrt(3);
+        let divisao = Math.multiply(d,raiz);
+        do Screen.drawLine(x, y, x+d, y);
+        do Screen.drawLine(x, y, x + e, y-divisao);
+        do Screen.drawLine(x+d, y, x+e, y-divisao);
         return;
     }
 
