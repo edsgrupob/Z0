@@ -24,8 +24,12 @@ public class Code {
 	private Integer count;
     /** 
      * Abre o arquivo de entrada VM e se prepara para analisá-lo.
+<<<<<<< HEAD
      * @param filename nome do arquivo VM que será feito o parser.
      * @throws IOException 
+=======
+     * @param filename nome do arquivo NASM que receberá o código traduzido.
+>>>>>>> upstream/master
      */
 	public Code(String filename) throws IOException {
 		vmfile(filename);

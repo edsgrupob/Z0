@@ -38,7 +38,7 @@ public class ParserTest {
 	public void testParser_commandType() {
 
 		try {
-			org.junit.Assume.assumeNotNull( parser.commandType("nop") );		// ignora test
+			org.junit.Assume.assumeNotNull( parser.commandType("push constant 0") ); // ignora test
 		} catch(Exception e) { 
 			org.junit.Assume.assumeNoException(e);
 		}
