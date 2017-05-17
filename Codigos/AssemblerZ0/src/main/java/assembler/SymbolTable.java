@@ -10,12 +10,12 @@ import java.util.Hashtable;
 import java.util.Set;
 
 /**
- * Mantém uma tabela com a correspondência entre os rótulos simbólicos e endereços numéricos de memória.
+ * Mantï¿½m uma tabela com a correspondï¿½ncia entre os rï¿½tulos simbï¿½licos e endereï¿½os numï¿½ricos de memï¿½ria.
  */
 public class SymbolTable {
 	Hashtable<String, Integer> symbolTable;
 	/**
-     * Cria a tabela de símbolos.
+     * Cria a tabela de sï¿½mbolos.
      */
 	
     public SymbolTable() {
@@ -47,9 +47,9 @@ public class SymbolTable {
     }
 
     /**
-     * Insere uma entrada de um símbolo com seu endereço numérico na tabela de símbolos.
-     * @param  symbol símbolo a ser armazenado na tabela de símbolos.
-     * @param  address símbolo a ser armazenado na tabela de símbolos.
+     * Insere uma entrada de um sï¿½mbolo com seu endereï¿½o numï¿½rico na tabela de sï¿½mbolos.
+     * @param  symbol sï¿½mbolo a ser armazenado na tabela de sï¿½mbolos.
+     * @param  address sï¿½mbolo a ser armazenado na tabela de sï¿½mbolos.
      */
     public void addEntry(String symbol, int address) {
     	
@@ -58,9 +58,9 @@ public class SymbolTable {
     }
 
     /**
-     * Confere se o símbolo informado já foi inserido na tabela de símbolos.
-     * @param  symbol símbolo a ser procurado na tabela de símbolos.
-     * @return Verdadeiro se símbolo está na tabela de símbolos, Falso se não está na tabela de símbolos.
+     * Confere se o sï¿½mbolo informado jï¿½ foi inserido na tabela de sï¿½mbolos.
+     * @param  symbol sï¿½mbolo a ser procurado na tabela de sï¿½mbolos.
+     * @return Verdadeiro se sï¿½mbolo estï¿½ na tabela de sï¿½mbolos, Falso se nï¿½o estï¿½ na tabela de sï¿½mbolos.
      */
     public boolean contains(String symbol) {
     	boolean contains = false;
@@ -75,9 +75,9 @@ public class SymbolTable {
     }
 
     /**
-     * Retorna o valor númerico associado a um símbolo já inserido na tabela de símbolos.
-     * @param  symbol símbolo a ser procurado na tabela de símbolos.
-     * @return valor numérico associado ao símbolo procurado.
+     * Retorna o valor nï¿½merico associado a um sï¿½mbolo jï¿½ inserido na tabela de sï¿½mbolos.
+     * @param  symbol sï¿½mbolo a ser procurado na tabela de sï¿½mbolos.
+     * @return valor numï¿½rico associado ao sï¿½mbolo procurado.
      */
     public int getAddress(String symbol) {
     	int getAddress = symbolTable.get(symbol);
