@@ -1,0 +1,91 @@
+function Main.main 0
+push constant 160
+push constant 120
+push constant 20
+call Main.drawHexagon 3
+pop temp 0
+push constant 0
+return
+function Main.drawHexagon 1
+push argument 2
+push constant 2
+call Math.divide 2
+pop local 0
+push argument 0
+push argument 2
+sub
+push argument 1
+push argument 0
+push local 0
+sub
+push argument 1
+push argument 2
+add
+call Screen.drawLine 4
+pop temp 0
+push argument 0
+push local 0
+sub
+push argument 1
+push argument 2
+add
+push argument 0
+push local 0
+add
+push argument 1
+push argument 2
+add
+call Screen.drawLine 4
+pop temp 0
+push argument 0
+push local 0
+add
+push argument 1
+push argument 2
+add
+push argument 0
+push argument 2
+add
+push argument 1
+call Screen.drawLine 4
+pop temp 0
+push argument 0
+push argument 2
+add
+push argument 1
+push argument 0
+push local 0
+add
+push argument 1
+push argument 2
+sub
+call Screen.drawLine 4
+pop temp 0
+push argument 0
+push local 0
+add
+push argument 1
+push argument 2
+sub
+push argument 0
+push local 0
+sub
+push argument 1
+push argument 2
+sub
+call Screen.drawLine 4
+pop temp 0
+push argument 0
+push local 0
+sub
+push argument 1
+push argument 2
+sub
+push argument 0
+push argument 2
+sub
+push argument 1
+call Screen.drawLine 4
+pop temp 0
+push constant 0
+return
