@@ -16,6 +16,16 @@ class Main {
     
     /** Desenha um Losango na tela. */
     function void drawDiamond(int x, int y, int d) {
+        var int e;
+        var int raiz;
+        let e = Math.divide(d,2);
+        let raiz = Math.sqrt(2);
+        let d = Math.multiply(e, raiz);
+
+        do Screen.drawLine(x, y+d, x+d, y);
+        do Screen.drawLine(x+d, y, x, y-d);
+        do Screen.drawLine(x, y-d, x-d, y);
+        do Screen.drawLine(x-d, y, x, y+d);
         return;
     }
 
