@@ -65,7 +65,7 @@ if [ -z "$1" ] || [ $1 == "assembly" ] ; then
 	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\tTestes para codigos em Assembly\t\t\t"${RESET_FORMATTING}
 	echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                               \t\t\t"${RESET_FORMATTING}
 	echo -e "\n"
-	python TestesSW/assembler.py -t TestesSW/testesAssembly.txt -in Codigos/Assembly/ -out TestesSW/machine_code/ -p 3
+	python TestesSW/assembler.py -j TestesSW/Assembler/AssemblerZ0.jar -t TestesSW/testesAssembly.txt -in Codigos/Assembly/ -out TestesSW/machine_code/ -p 3
 	let "n_error+=$?"
 	python TestesSW/emulate.py -t TestesSW/testesAssembly.txt -in TestesSW/testesAssembly/ -out TestesSW/machine_code/ -p 3 -r 512,256
 	let "n_error+=$?"
@@ -102,7 +102,7 @@ if [ -z "$1" ] || [ $1 == "vmtranslator" ] ; then
 	let "n_error+=$?"
 	python TestesSW/vmtranslator.py -j Codigos/VMTranslator/target/VMTranslator-1.0.jar -t TestesSW/testesVMTranslator.txt -in Codigos/VMTranslator/src/test/resources/ -out TestesSW/vm_code/ -p 3
 	let "n_error+=$?"
-	python TestesSW/assembler.py -t TestesSW/testesVMTranslator.txt -in TestesSW/vm_code/ -out TestesSW/vm_code/ -p 3
+	python TestesSW/assembler.py -j TestesSW/Assembler/AssemblerZ0.jar -t TestesSW/testesVMTranslator.txt -in TestesSW/vm_code/ -out TestesSW/vm_code/ -p 3
 	let "n_error+=$?"
 	python TestesSW/emulate.py -t TestesSW/testesVMTranslator.txt -in TestesSW/testesVMTranslator/ -out TestesSW/vm_code/ -p 3
 	let "n_error+=$?"
@@ -121,7 +121,7 @@ if [ -z "$1" ] || [ $1 == "jack" ] ; then
 	let "n_error+=$?"
 	python TestesSW/vmtranslator.py -j TestesSW/VMTranslator/VMTranslator.jar -t TestesSW/testesJack.txt -in TestesSW/jack_code/ -out TestesSW/jack_code/ -p 3
 	let "n_error+=$?"
-	python TestesSW/assembler.py -t TestesSW/testesJack.txt -in TestesSW/jack_code/ -out TestesSW/jack_code/ -p 3 -b 32
+	python TestesSW/assembler.py -j TestesSW/Assembler/AssemblerZ0.jar -t TestesSW/testesJack.txt -in TestesSW/jack_code/ -out TestesSW/jack_code/ -p 3 -b 32
 	let "n_error+=$?"
 	python TestesSW/emulate.py -t TestesSW/testesJack.txt -out TestesSW/jack_code/ -p 3 -b 32 -r 512,256
 	let "n_error+=$?"

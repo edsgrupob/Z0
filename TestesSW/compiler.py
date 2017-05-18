@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # Curso de Elementos de Sistemas
 # Desenvolvido por: Luciano Soares <lpsoares@insper.edu.br>
 # Data de criação: 6/05/2017
@@ -6,12 +9,26 @@ import subprocess
 import loadTestes
 import time
 import argparse
+import platform
 
 def compiler(testes,in_dir,out_dir,processos):
 	
 	start_time = time.time()
 
-	subprocess.call(["mkdir", "-p", out_dir])
+	rotina_mkdir = ["mkdir"]
+
+	if platform.system()=="Windows":
+		jar = '"%CLASSPATH%;TestesSW\Compiler;TestesSW\Compiler\Hack.jar;TestesSW\Compiler\Compilers.jar"'
+		testes = testes.replace('/','\\')
+		in_dir = in_dir.replace('/','\\')
+		out_dir = out_dir.replace('/','\\')
+	else:
+		rotina_mkdir.append("-p") # para criar os subdiretórios no mkdir no UNIX
+		jar = '${CLASSPATH}:TestesSW/Compiler:TestesSW/Compiler/Hack.jar:TestesSW/Compiler/Compilers.jar'
+
+	rotina_mkdir.append(out_dir)
+
+	subprocess.call(rotina_mkdir, shell=True) # cria subdiretório para resultados
 
 	nomes_testes = loadTestes.testes(testes)
 
@@ -21,18 +38,24 @@ def compiler(testes,in_dir,out_dir,processos):
 	for i in nomes_testes:
 
 		nome = i.split()
-		error = subprocess.call(['java', '-classpath',
-			'${CLASSPATH}:TestesSW/Compiler:TestesSW/Compiler/Hack.jar:TestesSW/Compiler/Compilers.jar',
-			'Hack.Compiler.JackCompiler',
-			in_dir+"{0}".format(nome[0])])
+		
+		rotina = ['java', '-classpath', jar,'Hack.Compiler.JackCompiler',
+			in_dir+"{0}".format(nome[0])]
+
+		error = subprocess.call(rotina,shell=True)
 		if(error!=0):
 			error_code += error
 		else:
 			done += 1
-
-		subprocess.call(["mkdir", "-p", out_dir+nome[0]])
-		subprocess.call(["mv {0} {1}".format(in_dir+nome[0]+"/*.vm",out_dir+nome[0]	)],shell=True)
-		subprocess.call(["cp {0} {1}".format("TestesSW/OS/*.vm",out_dir+nome[0]	)],shell=True)
+	
+		if platform.system()=="Windows":
+			subprocess.call(["mkdir", out_dir+nome[0]], shell=True)
+			subprocess.call(["move","/Y",in_dir+nome[0]+"\\*.vm",out_dir+nome[0]],shell=True)
+			subprocess.call(["copy","/Y","TestesSW\\OS\\*.vm",out_dir+nome[0]],shell=True)
+		else:
+			subprocess.call(["mkdir", "-p", out_dir+nome[0]])
+			subprocess.call(["mv {0} {1}".format(in_dir+nome[0]+"/*.vm",out_dir+nome[0]	)],shell=True)
+			subprocess.call(["cp {0} {1}".format("TestesSW/OS/*.vm",out_dir+nome[0]	)],shell=True)
 
 	elapsed_time = time.time() - start_time
 	print('\033[92m'+"Compiled {0} file(s) in {1:.2f} seconds".format(done,elapsed_time)+'\033[0m') 
