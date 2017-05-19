@@ -16,6 +16,23 @@ class Main {
     
     /** Desenha um Pentagono na tela. */
     function void drawPentagon(int x, int y, int d) {
+		var int e;
+		var int a;
+		var int b;
+		var int c;
+		var int f;
+		var int g;
+		let e = Math.divide(d,2);
+		let a = Math.multiply(d,6275);
+		let b = Math.divide(a,10000);
+		let c = Math.divide(b,2);
+		do Screen.drawLine(x-c,y-e,x+c,y-e);
+		let f = Math.multiply(d,1208);
+		let g = Math.divide(f,10000);
+		do Screen.drawLine(x+c,y-e,x+e,y+g);
+		do Screen.drawLine(x-c,y-e,x-e,y+g);
+		do Screen.drawLine(x+e,y+g,x,y+e);
+		do Screen.drawLine(x-e,y+g,x,y+e);
         return;
     }
 
