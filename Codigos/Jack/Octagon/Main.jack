@@ -16,6 +16,23 @@ class Main {
     
     /** Desenha um Octagono na tela. */
     function void drawOctagon(int x, int y, int d) {
+        var int e;
+        var int raiz2;
+        var int h2;
+        var int h;
+        let e = Math.divide(d,2);
+        let raiz2 = Math.sqrt(2);
+        let h2 = Math.divide(e,raiz2);
+        let h = h2 + e;
+        do Screen.drawLine(x-e, y+h, x+e, y+h);
+        do Screen.drawLine(x+e, y+h, x+h, y+e);
+        do Screen.drawLine(x+h, y+e, x+h, y-e);
+        do Screen.drawLine(x+h, y-e, x+e, y-h);
+        do Screen.drawLine(x+e, y-h, x-e, y-h);
+        do Screen.drawLine(x-e, y-h, x-h, y-e);
+        do Screen.drawLine(x-h, y-e, x-h, y+e);
+        do Screen.drawLine(x-h, y+e, x-e, y+h);
+
         return;
     }
 
