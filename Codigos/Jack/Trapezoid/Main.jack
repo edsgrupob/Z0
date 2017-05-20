@@ -22,17 +22,22 @@ class Main {
         var int tmp1;
         var int tmp2;
         var int tmp3;
+        var int tmp4;
+        var int Dlx;
         
         let tmp1 = d-D;
         let lx = Math.divide(tmp1, 2);
         
         let tmp2 = Math.multiply(l, l);
         let tmp3 = Math.multiply(lx, lx);
-        let ly = tmp2-tmp3;
+        let tmp4 = tmp2-tmp3;
+        let ly = Math.sqrt(tmp4);
+        
+        let Dlx = D+lx;
         
         do Screen.drawLine(x, y, x+d, y);
-        do Screen.drawLine(x+d, y, x+D+lx, y+ly);
-        do Screen.drawLine(x+D+lx, y+ly, x+lx, y+ly);
+        do Screen.drawLine(x+d, y, x+Dlx, y+ly);
+        do Screen.drawLine(x+Dlx, y+ly, x+lx, y+ly);
         do Screen.drawLine(x+lx, y+ly, x, y);
     
         return;
