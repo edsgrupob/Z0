@@ -56,6 +56,13 @@ matrix:
     os: linux
     sudo: required
     dist: trusty
+
+  - env: BUILD_NAME=compiler
+    python: '3.6'
+    os: linux
+    sudo: required
+    dist: trusty
+    
     
 
 addons:
