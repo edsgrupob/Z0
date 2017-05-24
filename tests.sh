@@ -130,14 +130,14 @@ if [ -z "$1" ] || [ $1 == "jack" ] ; then
 fi
 
 # Testes para o Compiler
-#if [ -z "$1" ] || [ $1 == "compiler" ] ; then
+if [ -z "$1" ] || [ $1 == "compiler" ] ; then
 	#echo -e "\n\n"
 	#echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                      \t\t\t"${RESET_FORMATTING}
 	#echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\tTestes para o Compiler\t\t\t"${RESET_FORMATTING}
 	#echo -e ${TEXT_MAGENTA}${BACKGROUND_CYAN}"\t\t\t                      \t\t\t"${RESET_FORMATTING}
 	#echo -e "\n"
-	# mvn-color -f Codigos/Compiler package
-	#let "n_error+=$?"
+	mvn-color -f Codigos/Compiler package
+	let "n_error+=$?"
 	#python TestesSW/testeCompiler.py -t TestesSW/testesCompiler.txt -in Codigos/Compiler/src/test/resources/ -out TestesSW/machine_code/ -p 3
 	#let "n_error+=$?"
 	#python TestesSW/vmtranslator.py -t TestesSW/testesCompiler.txt -in Codigos/Compiler/src/test/resources/ -out TestesSW/machine_code/ -p 3
@@ -148,6 +148,6 @@ fi
 	#let "n_error+=$?"
 	#python -m pytest -v TestesSW/testeVMTranslator.py -rxs
 	#let "n_error+=$?"
-#fi
+fi
 
 exit $n_error

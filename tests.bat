@@ -80,7 +80,7 @@ if "%compiler%"=="T" (
 	echo.
 	echo "Testes para o Compiler"
 	echo.
-	rem mvn-color -f Codigos/Compiler package
+	mvn-color -f Codigos/Compiler package
 	rem python TestesSW/testeCompiler.py -t TestesSW/testesCompiler.txt -in Codigos/Compiler/src/test/resources/ -out TestesSW/machine_code/ -p 3
 	rem python TestesSW/vmtranslator.py -t TestesSW/testesCompiler.txt -in Codigos/Compiler/src/test/resources/ -out TestesSW/machine_code/ -p 3
 	rem python TestesSW/assembler.py -t TestesSW/testesCompiler.txt -in TestesSW/machine_code/ -out TestesSW/machine_code/ -p 3
