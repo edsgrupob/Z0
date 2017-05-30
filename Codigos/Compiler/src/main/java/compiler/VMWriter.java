@@ -6,12 +6,14 @@
 package compiler;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * Encapsula o código para gravar as instruções em Liguagem de Máquina Virtual à Pilha.
  * Responsável por abrir o arquivo para gravar instruções, possui funcionalidades para gravar as instruções.
  */
 public class VMWriter {
+	private VMWriter vmWriter;
 
     /** Enumerator para os tipos de segmentos de memória do Z0. */
     public enum Segment {
@@ -42,8 +44,9 @@ public class VMWriter {
      * Grava instruções no formato de máquina virtual a pilha.
      * @param objeto File para o arquivo onde serão salvas as instruções em VM.
      */
-    public VMWriter(File file) {
-
+    public VMWriter(File file) throws FileNotFoundException {
+    	vmWriter = new VMWriter(file);
+    	
     }
 
     /** 
@@ -54,7 +57,8 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writePush(Segment segment, Integer index) {
-        return null;
+
+        return ("push " + segment + " " + index + "\n");
     }
 
     /** 
@@ -64,7 +68,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writePop(Segment segment, Integer index) {
-        return null;
+        return ("pop " + segment + " " + index + "\n");
     }
 
     /** 
@@ -73,7 +77,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeArithmetic(Command command) {
-        return null;
+        return (command + "\n");
     }
 
     /** 
@@ -82,7 +86,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeLabel(String label) {
-        return null;
+        return ("label" + " " + label + "\n");
     }
 
     /** 
@@ -91,7 +95,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeGoto(String label) {
-        return null;
+        return ("goto" + " " + label + "\n");
     }
 
     /** 
@@ -100,7 +104,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeIf(String label) {
-        return null;
+        return ("if-goto" + " " + label + "\n");
     }
 
     /** 
@@ -110,7 +114,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeCall(String name, Integer nArgs) {
-        return null;
+        return ("call" + " " + name + " " + nArgs + "\n");
     }
 
     /** 
@@ -120,7 +124,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeFunction(String name, Integer nLocals) {
-        return null;
+        return ("call" + " " + name + " " + nLocals + "\n");
     }
 
     /** 
@@ -128,7 +132,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeReturn() {
-        return null;
+        return ("return \n");
     }
 
     /** 
@@ -147,7 +151,7 @@ public class VMWriter {
      * O arquivo deve ser fechado ao final da gravação, senão dados podem não ser gravados de fato.
      */
     public void close() {
-    
+    	vmWriter.close();
     }
 
 }
