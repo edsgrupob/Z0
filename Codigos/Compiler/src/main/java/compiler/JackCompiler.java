@@ -12,7 +12,6 @@ package compiler;
  * Opções:
  *   <arquivo jack>      primeiro parametro é o nome do arquivo jack a ser aberto 
  *   -o <arquivo vm>     parametro (opcional) que indica onde será salvo o arquivo gerado .vm
- *   -x                  gera arquivos de saída da análise sintática em XML
  */
 class JackCompiler {
 
@@ -21,9 +20,8 @@ class JackCompiler {
 	 * Os parâmetros de linha de comando dever ser tratados nessa rotina.
 	 */ 
 	public static void main(String[] args) {
-		String inputName = "";
-    	String outputName = "";
-    	String outputNameXML = "";
+		String inputName = null;
+    	String outputName = null;
 		int i = 0;
 
 		if (args.length>0 && args[0].split(".")[1].equals("jack")) {
@@ -36,10 +34,6 @@ class JackCompiler {
 				outputName = args[i+1];
 			}
 			
-			if (args[i].equals("-x")){
-				outputNameXML = args[i+1];
-			}
-		
 			i+=1;
 		}
 		
@@ -50,10 +44,6 @@ class JackCompiler {
 
 		if (outputName == null){
 			outputName = (inputName.split(".")[0]+".vm");
-		}
-		
-		if (outputNameXML == null){
-			outputNameXML = (inputName.split(".")[0]+".xml");
 		}
 		
 		CompilationEngine codeVM = new CompilationEngine(inputName, outputName);
