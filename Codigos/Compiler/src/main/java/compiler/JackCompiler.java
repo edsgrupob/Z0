@@ -21,7 +21,42 @@ class JackCompiler {
 	 * Os parâmetros de linha de comando dever ser tratados nessa rotina.
 	 */ 
 	public static void main(String[] args) {
+		String inputName = "";
+    	String outputName = "";
+    	String outputNameXML = "";
+		int i = 0;
 
+		if (args.length>0 && args[0].split(".")[1].equals("jack")) {
+			inputName = args[0];
+		}
+		
+		while(i != args.length){
+
+			if (args[i].equals("-o")){
+				outputName = args[i+1];
+			}
+			
+			if (args[i].equals("-x")){
+				outputNameXML = args[i+1];
+			}
+		
+			i+=1;
+		}
+		
+		if (inputName == null){
+			System.err.println("Arquivo de entrada invalido");
+			System.exit(1);
+		}
+
+		if (outputName == null){
+			outputName = (inputName.split(".")[0]+".vm");
+		}
+		
+		if (outputNameXML == null){
+			outputNameXML = (inputName.split(".")[0]+".xml");
+		}
+		
+		CompilationEngine codeVM = new CompilationEngine(inputName, outputName);
+		codeVM.compileClass();
 	}
-	
 }
