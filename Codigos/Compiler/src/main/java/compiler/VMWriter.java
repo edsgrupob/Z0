@@ -58,7 +58,7 @@ public class VMWriter {
      */
     public String writePush(Segment segment, Integer index) {
 
-        return ("push " + segment + " " + index + "\n");
+        return ("push " + segment + " " + index + "\n").toString().toLowerCase();
     }
 
     /** 
@@ -68,7 +68,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writePop(Segment segment, Integer index) {
-        return ("pop " + segment + " " + index + "\n");
+        return ("pop " + segment + " " + index + "\n").toString().toLowerCase();
     }
 
     /** 
@@ -77,7 +77,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeArithmetic(Command command) {
-        return (command + "\n");
+        return (command + "\n").toString().toLowerCase();
     }
 
     /** 
@@ -86,7 +86,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeLabel(String label) {
-        return ("label" + " " + label + "\n");
+        return ("label" + " " + label + "\n").toString().toLowerCase();
     }
 
     /** 
@@ -95,7 +95,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeGoto(String label) {
-        return ("goto" + " " + label + "\n");
+        return ("goto" + " " + label + "\n").toString().toLowerCase();
     }
 
     /** 
@@ -104,7 +104,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeIf(String label) {
-        return ("if-goto" + " " + label + "\n");
+        return ("if-goto" + " " + label + "\n").toString().toLowerCase();
     }
 
     /** 
@@ -114,7 +114,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeCall(String name, Integer nArgs) {
-        return ("call" + " " + name + " " + nArgs + "\n");
+        return ("call" + " " + name + " " + nArgs + "\n").toString().toLowerCase();
     }
 
     /** 
@@ -124,7 +124,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeFunction(String name, Integer nLocals) {
-        return ("call" + " " + name + " " + nLocals + "\n");
+        return ("call" + " " + name + " " + nLocals + "\n").toString().toLowerCase();
     }
 
     /** 
@@ -132,7 +132,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeReturn() {
-        return ("return \n");
+        return ("return \n").toString().toLowerCase();
     }
 
     /** 
@@ -143,7 +143,16 @@ public class VMWriter {
      * @return retorna o numero de caracteres que foram detectados na String.
      */
     public Integer writeString(String text) {
-        return null;
+        writePush(Segment.CONST, text.length());
+        writeCall("String.new", 1);
+        for(int i=0;i<text.length();i++) {
+            char character= text.charAt(i);
+            int ascii = (int) character;
+            writePush(Segment.CONST,ascii);
+            writeCall("String.appendChar",2);
+        }
+
+        return (text.length());
     }
 
     /** 
@@ -151,7 +160,7 @@ public class VMWriter {
      * O arquivo deve ser fechado ao final da gravação, senão dados podem não ser gravados de fato.
      */
     public void close() {
-    	vmWriter.close();
+    	this.vmWriter.close();
     }
 
 }
