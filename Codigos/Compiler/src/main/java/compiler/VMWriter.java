@@ -86,7 +86,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeLabel(String label) {
-        return ("label" + " " + label + "\n").toString().toLowerCase();
+        return ("label" + " " + label + "\n");
     }
 
     /** 
@@ -95,7 +95,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeGoto(String label) {
-        return ("goto" + " " + label + "\n").toString().toLowerCase();
+        return ("goto" + " " + label + "\n");
     }
 
     /** 
@@ -104,7 +104,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeIf(String label) {
-        return ("if-goto" + " " + label + "\n").toString().toLowerCase();
+        return ("if-goto" + " " + label + "\n");
     }
 
     /** 
@@ -114,7 +114,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeCall(String name, Integer nArgs) {
-        return ("call" + " " + name + " " + nArgs + "\n").toString().toLowerCase();
+        return ("call" + " " + name + " " + nArgs + "\n");
     }
 
     /** 
@@ -124,7 +124,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeFunction(String name, Integer nLocals) {
-        return ("call" + " " + name + " " + nLocals + "\n").toString().toLowerCase();
+        return ("call" + " " + name + " " + nLocals + "\n");
     }
 
     /** 
@@ -132,7 +132,7 @@ public class VMWriter {
      * @return retorna a String do respectivo comando
      */
     public String writeReturn() {
-        return ("return \n").toString().toLowerCase();
+        return ("return \n");
     }
 
     /** 
