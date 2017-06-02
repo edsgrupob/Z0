@@ -5,17 +5,14 @@
 
 package compiler;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Encapsula o código para gravar as instruções em Liguagem de Máquina Virtual à Pilha.
  * Responsável por abrir o arquivo para gravar instruções, possui funcionalidades para gravar as instruções.
  */
 public class VMWriter {
-	private VMWriter vmWriter;
+	PrintWriter out;
 
     /** Enumerator para os tipos de segmentos de memória do Z0. */
     public enum Segment {
@@ -47,8 +44,7 @@ public class VMWriter {
      * @param objeto File para o arquivo onde serão salvas as instruções em VM.
      */
     public VMWriter(File file) throws FileNotFoundException {
-    	File file = new File(file);
-    	FileOutputStream fos = null;
+    	PrintWriter out = new PrintWriter(file);
     }
 
     /** 
@@ -63,9 +59,7 @@ public class VMWriter {
         
         return ("push" + " " + segment + " " + index + "\n").toString().toLowerCase();
         
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-        bw.write(writePush);
-        bw.newLine();
+        out.println(("push" + " " + segment + " " + index + "\n").toString().toLowerCase());
     }
 
     /** 
@@ -77,9 +71,7 @@ public class VMWriter {
     public String writePop(Segment segment, Integer index) {
         return ("pop " + segment + " " + index + "\n").toString().toLowerCase();
 
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-        bw.write(writePop);
-        bw.newLine();
+        out.println(("pop " + segment + " " + index + "\n").toString().toLowerCase());
     }
 
     /** 
@@ -90,9 +82,7 @@ public class VMWriter {
     public String writeArithmetic(Command command) {
         return (command + "\n").toString().toLowerCase();
 
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-        bw.write(writeArithmetic);
-        bw.newLine();
+        out.println((command + "\n").toString().toLowerCase());
     }
 
     /** 
@@ -103,9 +93,7 @@ public class VMWriter {
     public String writeLabel(String label) {
         return ("label" + " " + label + "\n");
 
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-        bw.write(writeLabel);
-        bw.newLine();
+        out.println("label" + " " + label + "\n");
     }
 
     /** 
@@ -116,9 +104,7 @@ public class VMWriter {
     public String writeGoto(String label) {
         return ("goto" + " " + label + "\n");
 
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-        bw.write(writeGoto);
-        bw.newLine();
+        out.println("goto" + " " + label + "\n");
     }
 
     /** 
@@ -129,9 +115,7 @@ public class VMWriter {
     public String writeIf(String label) {
         return ("if-goto" + " " + label + "\n");
 
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-        bw.write(writeIf);
-        bw.newLine();
+        out.println("if-goto" + " " + label + "\n");
     }
 
     /** 
@@ -143,9 +127,7 @@ public class VMWriter {
     public String writeCall(String name, Integer nArgs) {
         return ("call" + " " + name + " " + nArgs + "\n");
 
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-        bw.write(writeCall);
-        bw.newLine();
+        out.println("call" + " " + name + " " + nArgs + "\n");
     }
 
     /** 
@@ -157,9 +139,7 @@ public class VMWriter {
     public String writeFunction(String name, Integer nLocals) {
         return ("call" + " " + name + " " + nLocals + "\n");
 
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-        bw.write(writeFunction);
-        bw.newLine();
+        out.println("call" + " " + name + " " + nLocals + "\n");
     }
 
     /** 
@@ -168,10 +148,7 @@ public class VMWriter {
      */
     public String writeReturn() {
         return ("return \n");
-
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-        bw.write(writeReturn);
-        bw.newLine();
+        out.println("return");
     }
 
     /** 
@@ -199,7 +176,7 @@ public class VMWriter {
      * O arquivo deve ser fechado ao final da gravação, senão dados podem não ser gravados de fato.
      */
     public void close() {
-    	this.file.close();
+    	this.out.close();
     }
 
 }
