@@ -7,6 +7,8 @@ package compiler;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 /**
  * Encapsula o código para gravar as instruções em Liguagem de Máquina Virtual à Pilha.
@@ -45,8 +47,8 @@ public class VMWriter {
      * @param objeto File para o arquivo onde serão salvas as instruções em VM.
      */
     public VMWriter(File file) throws FileNotFoundException {
-    	vmWriter = new VMWriter(file);
-    	
+    	File file = new File(file);
+    	FileOutputStream fos = null;
     }
 
     /** 
@@ -58,7 +60,12 @@ public class VMWriter {
      */
     public String writePush(Segment segment, Integer index) {
 
-        return ("push " + segment + " " + index + "\n").toString().toLowerCase();
+        
+        return ("push" + " " + segment + " " + index + "\n").toString().toLowerCase();
+        
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+        bw.write(writePush);
+        bw.newLine();
     }
 
     /** 
@@ -69,6 +76,10 @@ public class VMWriter {
      */
     public String writePop(Segment segment, Integer index) {
         return ("pop " + segment + " " + index + "\n").toString().toLowerCase();
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+        bw.write(writePop);
+        bw.newLine();
     }
 
     /** 
@@ -78,6 +89,10 @@ public class VMWriter {
      */
     public String writeArithmetic(Command command) {
         return (command + "\n").toString().toLowerCase();
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+        bw.write(writeArithmetic);
+        bw.newLine();
     }
 
     /** 
@@ -87,6 +102,10 @@ public class VMWriter {
      */
     public String writeLabel(String label) {
         return ("label" + " " + label + "\n");
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+        bw.write(writeLabel);
+        bw.newLine();
     }
 
     /** 
@@ -96,6 +115,10 @@ public class VMWriter {
      */
     public String writeGoto(String label) {
         return ("goto" + " " + label + "\n");
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+        bw.write(writeGoto);
+        bw.newLine();
     }
 
     /** 
@@ -105,6 +128,10 @@ public class VMWriter {
      */
     public String writeIf(String label) {
         return ("if-goto" + " " + label + "\n");
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+        bw.write(writeIf);
+        bw.newLine();
     }
 
     /** 
@@ -115,6 +142,10 @@ public class VMWriter {
      */
     public String writeCall(String name, Integer nArgs) {
         return ("call" + " " + name + " " + nArgs + "\n");
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+        bw.write(writeCall);
+        bw.newLine();
     }
 
     /** 
@@ -125,6 +156,10 @@ public class VMWriter {
      */
     public String writeFunction(String name, Integer nLocals) {
         return ("call" + " " + name + " " + nLocals + "\n");
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+        bw.write(writeFunction);
+        bw.newLine();
     }
 
     /** 
@@ -133,6 +168,10 @@ public class VMWriter {
      */
     public String writeReturn() {
         return ("return \n");
+
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+        bw.write(writeReturn);
+        bw.newLine();
     }
 
     /** 
@@ -160,7 +199,7 @@ public class VMWriter {
      * O arquivo deve ser fechado ao final da gravação, senão dados podem não ser gravados de fato.
      */
     public void close() {
-    	this.vmWriter.close();
+    	this.file.close();
     }
 
 }
