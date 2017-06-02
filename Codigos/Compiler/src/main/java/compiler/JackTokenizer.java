@@ -71,11 +71,11 @@ public class JackTokenizer {
      */
     public JackTokenizer(String file) throws FileNotFoundException, IOException {
     	String line;
-    	String fixedDir = "Codigos/Compiler/";
+//    	String fixedDir = "Codigos/Compiler/";
 //    	System.out.println("Working Directory = " +
 //                System.getProperty("user.dir"));
     	try (
-			InputStream fis = new FileInputStream(fixedDir + file);
+			InputStream fis = new FileInputStream( file);
     	    InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
     	    BufferedReader br = new BufferedReader(isr);
     	) {
@@ -87,6 +87,7 @@ public class JackTokenizer {
 	    		if (linhaFormatada != null) {
     	    		for (int i = 0; i < linhaFormatada.length; i++) {
 						listaTokens.add(linhaFormatada[i]);
+						//System.out.println(linhaFormatada[i]);
 						
 					}
     	    	}    	        
@@ -135,20 +136,6 @@ public class JackTokenizer {
 				}
 			}
     		
-    		// Procura por parênteses no meio da linha e separa ele em tokens
-//    		for (int i = 0; i < lineWithComment.length; i++) {
-//    			for (int parentesisIndex = 0; parentesisIndex < lineWithComment[i].length(); parentesisIndex++) {
-//					char character = lineWithComment[i].charAt(parentesisIndex);
-//					if (character == '('){
-//						// Achou um parênteses, precisamos separar ele da string
-//						System.out.println(" ");
-//						for (int j = 0; j < parentesesIndex; j++) {
-//							System.out.print(lineWithComment[i].charAt(j));
-//						}
-//						
-//					}
-//				}
-//			}
     	}
     	
     	if (lineWithComment != null) {
@@ -173,26 +160,48 @@ public class JackTokenizer {
     	symbols.add(",");
     	symbols.add(".");
     	symbols.add(";");
+    	symbols.add("[");
+    	symbols.add("]");
+    	symbols.add("+");
+    	symbols.add("-");
+    	symbols.add("|");
+    	symbols.add("*");
+    	symbols.add("~");
+    	symbols.add("&");
+    	symbols.add("<");
+    	symbols.add(">");
+    	symbols.add("/");
     	
     	
     	for (int token = 0; token < tokenWithSymbol.length; token++) {
-	   		System.out.println(tokenWithSymbol[token]);    		
-    		for (String symbol : symbols) {
 
+    		for (String symbol : symbols) {
+    			String [] separedToken;
     			if (tokenWithSymbol[token].contains(symbol)) {
-        			System.out.println(symbol);       				
-    			}
-			
+    				tokenWithSymbol[token] = tokenWithSymbol[token].replace(symbol, " " + symbol + " ");	
+    				separedToken = tokenWithSymbol[token].split("\\s");
+
+    					
+    					for (int i = 0; i < separedToken.length; i++) {
+    						
+    						filteredSymbol.add(separedToken[i]);
+    						
+    					}
+    			
+    				
     		}
  
     		
 		}
+    		
     	
     	
     	String[] returnArray = filteredSymbol.toArray(new String[0]);
 //    	return returnArray;
     }
-
+    	System.out.println(filteredSymbol);    	
+}
+    
     /**
      * Carrega um token (átomo) e avança seu apontador interno para o próximo token
      * Caso não haja mais tokens no arquivo de entrada o método retorna "Falso", 
