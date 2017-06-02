@@ -11,6 +11,9 @@ package compiler;
  * O processo é gerenciado por funções recursivas.
  */
 public class CompilationEngine {
+    JackTokenizer jtokenizer;
+    VMWriter writer;
+    SymbolTable symbolTable;
 
     /** 
      * Construtor da classe, responsável por iniciar/instanciar os objetos do processo.
@@ -19,6 +22,104 @@ public class CompilationEngine {
      */   
     public CompilationEngine(String inputfilename, String outputfilename) {
         
+        jtokenizer= new JackTokenizer(inputfilename);
+        symbolTable= new SymbolTable();
+        writer= new VMWriter(outputfilename);
+        
+        /*
+        
+        while(jtokenizer.advance()){
+        
+            switch( jtokenizer.tokenType( jtokenizer.token() ) ){
+            
+                case jtokenizer.TokenType.KEYWORD:
+                    
+                    switch( jtokenizer.keyword( jtokenizer.token() ) ){
+                    
+                        case jtokenizer.KeywordType.CLASS:
+                        
+                            compileClass();
+                            break;
+                            
+                        case jtokenizer.KeywordType.METHOD:
+                            break;
+                            
+                        case jtokenizer.KeywordType.FUNCTION:
+                            break;
+                            
+                        case jtokenizer.KeywordType.CONSTRUCTOR:
+                            break;
+                            
+                        case jtokenizer.KeywordType.INT:
+                            break;
+                            
+                        case jtokenizer.KeywordType.BOOLEAN:
+                            break;
+                            
+                        case jtokenizer.KeywordType.CHAR:
+                            break;
+                            
+                        case jtokenizer.KeywordType.VOID:
+                            break;
+                            
+                        case jtokenizer.KeywordType.VAR:
+                            break;
+                            
+                        case jtokenizer.KeywordType.STATIC:
+                            break;
+                            
+                        case jtokenizer.KeywordType.FIELD:
+                            break;
+                            
+                        case jtokenizer.KeywordType.LET:
+                            break;
+                            
+                        case jtokenizer.KeywordType.DO:
+                            break;
+                            
+                        case jtokenizer.KeywordType.IF:
+                            break;
+                            
+                        case jtokenizer.KeywordType.ELSE:
+                            break;
+                            
+                        case jtokenizer.KeywordType.WHILE:
+                            break;
+                            
+                        case jtokenizer.KeywordType.RETURN:
+                            break;
+                            
+                        case jtokenizer.KeywordType.TRUE:
+                            break;
+                            
+                        case jtokenizer.KeywordType.FALSE:
+                            break;
+                            
+                        case jtokenizer.KeywordType.NULL:
+                            break;
+                            
+                        case jtokenizer.KeywordType.THIS:
+                            break;
+                            
+                        
+                    break;
+                    
+                case jtokenizer.TokenType.SYMBOL:
+                    break;
+                    
+                case jtokenizer.TokenType.IDENTIFIER:
+                    break;
+                    
+                case jtokenizer.TokenType.INT_CONST:
+                    break;
+                    
+                case jtokenizer.TokenType.STRING_CONST:
+                    break;
+            }
+        }
+        */
+        
+        compileClass();
     }
 
     /**
@@ -28,8 +129,36 @@ public class CompilationEngine {
      * Respectivas gramática:  'class' className '{' classVarDec* subroutineDec* '}'
      */
     public void compileClass() {
-
-    }
+    
+        //CLASS
+        
+        //IDENTIFIER
+        if ( jtokenizer.advance() && jtokenizer.tokenType( jtokenizer.token() )==jtokenizer.TokenType.IDENTIFIER ) {
+        
+            //FAZER AQUI AS COISAS, TALVEZ?
+        }else{
+            printError("IDENTIFIER");
+        }
+        
+        //SYMBOL
+        if ( jtokenizer.advance() && jtokenizer.token().equals("{") {
+        
+            //FAZER AQUI AS COISAS, TALVEZ?
+        }else{
+            printError("{");
+        }
+        
+        //**
+        
+        //**
+        
+        //SYMBOL
+        if ( jtokenizer.advance() && jtokenizer.token().equals("}") {
+        
+            //FAZER AQUI AS COISAS, TALVEZ?
+        }else{
+            printError("}");
+        }
 
     /**
      * Realiza as chamadas recursivas para criar a árvores sintática a partir das declarações da classe.
@@ -38,7 +167,35 @@ public class CompilationEngine {
      * Respectivas gramática:  ('static' | 'field') type varName (',' varName)* ';' 
      */
     public void compileClassVarDec() {
+    
         
+        //TYPE
+        if ( jtokenizer.advance() && jtokenizer.token().equals("static") {
+        
+            //FAZER AQUI AS COISAS, TALVEZ?
+        }else if( jtokenizer.advance() && jtokenizer.token().equals("field"){
+            
+            //
+        }else{
+            printError("TYPE");
+        }
+        
+        //IDENTIFIER
+        if ( jtokenizer.advance() && jtokenizer.tokenType( jtokenizer.token() )==jtokenizer.TokenType.IDENTIFIER ) {
+        
+            //FAZER AQUI AS COISAS, TALVEZ?
+        }else{
+            printError("IDENTIFIER");
+        }
+        
+        
+        //SYMBOL
+        if ( jtokenizer.advance() && jtokenizer.token().equals(";") {
+        
+            //FAZER AQUI AS COISAS, TALVEZ?
+        }else{
+            printError(";");
+        }
     }
 
     /**
@@ -50,6 +207,65 @@ public class CompilationEngine {
      *                         subroutineBody 
      */
     public void compileSubroutineDec() {
+    
+        //KEYWORD
+        
+        if ( jtokenizer.advance() && jtokenizer.tokenType( jtokenizer.token() )==jtokenizer.TokenType.KEYWORD ) {
+            jtokenizer.KeywordType keyword= jtokenizer.keyWord( jtokenizer.token());
+            
+            if (keyword==jtokenizer.KeyWordType.METHOD || keyword==jtokenizer.KeyWordType.FUNCTION || keyword==jtokenizer.KeyWordType.CONSTRUCTOR) {
+        
+                //FAZER AQUI AS COISAS, TALVEZ?
+            }else{
+                printError("CONSTRUCTOR ou FUNCTION ou METHOD");
+            }
+        }else{
+            printError("KEYWORD");
+        }
+        
+        //TYPE
+        if ( jtokenizer.advance() && jtokenizer.tokenType( jtokenizer.token() )==jtokenizer.TokenType.KEYWORD ) {
+            jtokenizer.KeywordType keyword= jtokenizer.keyWord( jtokenizer.token());
+            
+            if (keyword==jtokenizer.KeyWordType.VOID || keyword==jtokenizer.KeyWordType.INT || keyword==jtokenizer.KeyWordType.CHAR || keyword==jtokenizer.KeyWordType.BOOLEAN) {
+        
+                //FAZER AQUI AS COISAS, TALVEZ?
+            }else{
+                printError("VOID ou INT ou CHAR ou BOOLEAN");
+            }
+        }else{
+            printError("KEYWORD");
+        }
+        
+        //IDENTIFIER
+        if ( jtokenizer.advance() && jtokenizer.tokenType( jtokenizer.token() )==jtokenizer.TokenType.IDENTIFIER ) {
+        
+            //FAZER AQUI AS COISAS, TALVEZ?
+        }else{
+            printError("IDENTIFIER");
+        }
+        
+        //SYMBOL
+        if ( jtokenizer.advance() && jtokenizer.token().equals("(") {
+        
+            //FAZER AQUI AS COISAS, TALVEZ?
+        }else{
+            printError("(");
+        }
+        
+        //**
+        
+        //SYMBOL
+        if ( jtokenizer.advance() && jtokenizer.token().equals(")") {
+        
+            //FAZER AQUI AS COISAS, TALVEZ?
+        }else{
+            printError(")");
+        }
+        
+        //**
+        
+        
     
     }
 
@@ -176,6 +392,11 @@ public class CompilationEngine {
      */
     public void compileTerm() {
     
+    }
+    
+    public void printError(String expected) {
+    
+        System.out.println(expected + " esperado, recebemos "+jtokenizer.token()+" que eh um "+jtokenizer.tokenType( jtokenizer.token() ));
     }
 
 }
