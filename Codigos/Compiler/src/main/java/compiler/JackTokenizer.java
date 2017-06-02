@@ -244,11 +244,21 @@ public class JackTokenizer {
      * O retorno é em função dos tipos do enumerator KeywordType.
      * Rotina só deve ser chamada se o tipo do token for um KEYWORD
      * @param  token a ser analisado.
+     * @param KeywordType 
      * @return o tipo de keyword do token.
      */
     public static KeywordType keyWord(String token) {
-        return null;
-    }
+			if (tokenType(token) == TokenType.KEYWORD) {
+			
+				for (KeywordType k : compiler.JackTokenizer.KeywordType.values()) {
+					return k;
+        }
+			}
+			else {
+				return null;
+			}
+			return null;
+		}
     
     /**
      * Retorna o dado como um Character no caso de um toke do tipo SYMBOL.
@@ -257,7 +267,14 @@ public class JackTokenizer {
      * @return somente o símbolo ou o valor número da instrução.
      */
     public static Character symbol(String token) {
+       if (tokenType(token) == TokenType.SYMBOL) {
+        token = token.replace("\"", "");
+        char character = token.charAt(0);
+        return character;
+      }
+      else {
         return null;
+      }
     }
 
     /**
@@ -267,7 +284,14 @@ public class JackTokenizer {
      * @return o valor numérico (Integer) do token informado (String).
      */
     public static Integer intVal(String token) {
+      if (tokenType(token) == TokenType.INT_CONST) {
+        token = token.replace("\"", "");
+        int integer = Integer.parseInt(token);
+        return integer;
+      }
+      else {
         return null;
+      }
     }
 
     /**
@@ -278,7 +302,13 @@ public class JackTokenizer {
      * @return o valor numérico (Integer) do token informado (String).
      */
     public static String stringVal(String token) {
+      if (tokenType(token) == TokenType.STRING_CONST) {
+        token = token.replace("\"", "");
+        return token;
+      }
+      else {
         return null;
+      }
     }
 
 }
