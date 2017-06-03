@@ -15,8 +15,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
@@ -61,7 +64,9 @@ public class JackTokenizer {
         THIS
     }
     
-    ArrayList<String> listaTokens;
+    
+    private List<String> tokens;
+    private int counter;
 
     /** 
      * Abre o arquivo de entrada no formato Jack e se prepara para analisá-lo.
@@ -71,31 +76,46 @@ public class JackTokenizer {
      */
     public JackTokenizer(String file) throws FileNotFoundException, IOException {
     	String line;
-//    	String fixedDir = "Codigos/Compiler/";
-//    	System.out.println("Working Directory = " +
-//                System.getProperty("user.dir"));
+    	String[] temp;
+    	
+    	counter= 0;
+    	//Talvez tenha que ser -1, não sei se tem que dar advance ou não pra ler o primeiro token
     	try (
 			InputStream fis = new FileInputStream( file);
     	    InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
     	    BufferedReader br = new BufferedReader(isr);
     	) {
-    		listaTokens = new ArrayList<String>();
+    		tokens= new Vector<String>();
+    		boolean isString= false;
+    		String stringHolder="";
     		
     	    while ((line = br.readLine()) != null) {
-    	    	String[] linhaFormatada = splitTokens(line);
-
-	    		if (linhaFormatada != null) {
-    	    		for (int i = 0; i < linhaFormatada.length; i++) {
-						listaTokens.add(linhaFormatada[i]);
-						//System.out.println(linhaFormatada[i]);
-						
-					}
-    	    	}    	        
+    	    	temp = splitTokens(line);
+    	    	   	    	
+	    		for (int i = 0; i < temp.length; i++) {
+	    			if(isString || temp[i].contains("\"") || temp[i].contains("\'")){
+	    				stringHolder+=temp[i];
+	    			}else{
+	    				tokens.add(temp[i]);
+	    			}
+	    			
+	    			if(temp[i].contains("\"") || temp[i].contains("\'")){
+	    				isString= !isString;
+	    				
+	    				if(stringHolder!=""){
+	    					tokens.add(stringHolder);
+	    				}
+	    				stringHolder="";
+	    			}
+				}
     	    }
     	    
     	} catch (Exception e) {
     		System.out.println(e);
 		}
+    	
+    	//TESTES
+    	
     }
     
     /**
@@ -111,7 +131,6 @@ public class JackTokenizer {
     	String[] newLine = line.trim().split(" ");
     	
     	// Armazena uma linha que tem comentário
-    	String[] lineWithComment = null;
     	if (newLine[0].contains("//")) {
     		return null;
     	} else if (newLine[0].contains("/*")){
@@ -122,85 +141,88 @@ public class JackTokenizer {
     		return null;
     	} else if (newLine[0].contains("/**")){
     		return null;
+    	} else if(newLine.length==1 && newLine[0].equals("")){
+    		return null;
     	} else {
     		// Procura por comentários no meio da linha
     		// e retorna o código até o index do comentário
-    		for (int i = 0; i < newLine.length; i++) {
+    		int i=-1;
+    		while((i+=1)!=newLine.length){
 				if (newLine[i].contains("//")) {
-					lineWithComment = new String[i];
-					
-					for (int j = 0; j < i; j++) {
-						lineWithComment[j] = newLine[j];
-					}
 					break;
 				}
+			}
+    		String[] temp = newLine.clone();
+    		newLine=new String[i];
+			for(i=0; i != newLine.length ; ++i){
+			
+				newLine[i]=temp[i];
 			}
     		
     	}
     	
-    	if (lineWithComment != null) {
-    		filterSymbols(lineWithComment);
-    		return lineWithComment;
-    	} 
+		filterSymbols(newLine);
     	
     	// A linha não tinha nenhum comentário, retorna apenas
     	// ela separada por espaços
 		return newLine;
     }
     
-    private void filterSymbols(String[] tokenWithSymbol) {
-    	ArrayList<String> filteredSymbol = new ArrayList<>();
+    private void filterSymbols(String[] newLine) {
     	
-    	ArrayList<String> symbols = new ArrayList<String>();
-    	symbols.add("}");
-    	symbols.add("{");
-    	symbols.add(")");
-    	symbols.add("(");
-    	symbols.add("=");
-    	symbols.add(",");
-    	symbols.add(".");
-    	symbols.add(";");
-    	symbols.add("[");
-    	symbols.add("]");
-    	symbols.add("+");
-    	symbols.add("-");
-    	symbols.add("|");
-    	symbols.add("*");
-    	symbols.add("~");
-    	symbols.add("&");
-    	symbols.add("<");
-    	symbols.add(">");
-    	symbols.add("/");
+    	String[] symbol = new String[19];
     	
+    	symbol[0]= "}";
+    	symbol[1]= "{";
+    	symbol[2]= ")";
+    	symbol[3]= "(";
+    	symbol[4]= "=";
+    	symbol[5]= ",";
+    	symbol[6]= ".";
+    	symbol[7]= ";";
+    	symbol[8]= "[";
+    	symbol[9]= "]";
+    	symbol[10]= "+";
+    	symbol[11]= "-";
+    	symbol[12]= "|";
+    	symbol[13]= "*";
+    	symbol[14]= "~";
+    	symbol[15]= "&";
+    	symbol[16]= "<";
+    	symbol[17]= ">";
+    	symbol[18]= "/";
     	
-    	for (int token = 0; token < tokenWithSymbol.length; token++) {
-
-    		for (String symbol : symbols) {
-    			String [] separedToken;
-    			if (tokenWithSymbol[token].contains(symbol)) {
-    				tokenWithSymbol[token] = tokenWithSymbol[token].replace(symbol, " " + symbol + " ");	
-    				separedToken = tokenWithSymbol[token].split("\\s");
-
-    					
-    					for (int i = 0; i < separedToken.length; i++) {
-    						
-    						filteredSymbol.add(separedToken[i]);
-    						
-    					}
+    	List<String> line;
+    	String[] temp;
+    	
+    	for(int i=0; i!=symbol.length; ++i){
+    		line = new Vector<String>();
+    		
+    		for(int j=0; j!=newLine.length; ++j){
+    			newLine[j]=" "+newLine[j]+" ";
+    			temp=newLine[j].split("\\"+symbol[i]);
+				newLine[j]=String.join(" "+symbol[i]+" ", temp);
+    			temp=newLine[j].split(" ");
     			
-    				
+    			for(int t=0; t!=temp.length; ++t){
+    				if (!temp[t].equals("")){
+    					line.add(temp[t]);
+    				}
+    			}
     		}
- 
-    		
-		}
-    		
+    		newLine=line.toArray(new String[line.size()]);
+    	}   	
+    	/*System.out.println(newLine.length);
+    	for(int index=0; index!=newLine.length; ++index){
+    		//System.out.println(newLine[index]);
+    		try{
+    			TimeUnit.SECONDS.sleep(1);
+    		}catch(Exception e){}
+    	}*/
     	
     	
-    	String[] returnArray = filteredSymbol.toArray(new String[0]);
-//    	return returnArray;
-    }
-    	System.out.println(filteredSymbol);    	
-}
+    	
+	}
     
     /**
      * Carrega um token (átomo) e avança seu apontador interno para o próximo token
@@ -214,7 +236,8 @@ public class JackTokenizer {
      * @return Verdadeiro se ainda há tokens, Falso se os tokens terminaram.
      */
     public Boolean advance() {
-        return null;
+    	++counter;
+        return (counter < tokens.size());
     }
 
     /**
@@ -222,7 +245,7 @@ public class JackTokenizer {
      * @return o átomo atual para ser analilisado.
      */
     public String token() {
-        return null;
+        return tokens.get(counter);
     }
 
     /**
@@ -236,7 +259,74 @@ public class JackTokenizer {
      * @return o tipo do token.
      */
     public static TokenType tokenType(String token) {
-        return null;
+    	
+    	String[] symbol = new String[19];
+    	
+    	symbol[0]= "}";
+    	symbol[1]= "{";
+    	symbol[2]= ")";
+    	symbol[3]= "(";
+    	symbol[4]= "=";
+    	symbol[5]= ",";
+    	symbol[6]= ".";
+    	symbol[7]= ";";
+    	symbol[8]= "[";
+    	symbol[9]= "]";
+    	symbol[10]= "+";
+    	symbol[11]= "-";
+    	symbol[12]= "|";
+    	symbol[13]= "*";
+    	symbol[14]= "~";
+    	symbol[15]= "&";
+    	symbol[16]= "<";
+    	symbol[17]= ">";
+    	symbol[18]= "/";
+    	
+    	switch(token){
+			case "class":
+			case "method":
+			case "function":
+			case "constructor":
+			case "int":
+			case "boolean":
+			case "char":
+			case "void":
+			case "var":
+			case "static":
+			case "field":
+			case "let":
+			case "do":
+			case "if":
+			case "else":
+			case "while":
+			case "return":
+			case "true":
+			case "false":
+			case "null":
+			case "this":
+			return TokenType.KEYWORD;
+			default:
+    	}
+    	
+    	for(int i=0; i!=symbol.length; ++i){
+    		
+    		if(symbol[i].equals(token)){
+    			return TokenType.SYMBOL;
+    		}
+    	}
+    	
+    	try{
+    		Integer.parseInt(token);
+    		return TokenType.INT_CONST;
+    	}catch(Exception e){
+    		//Não é INT_CONST
+    	}
+    	
+    	if(token.contains("\"") || token.contains("\'")){
+    		return TokenType.STRING_CONST;
+    	}
+    	
+    	return TokenType.IDENTIFIER;
     }
 
     /**
@@ -248,29 +338,67 @@ public class JackTokenizer {
      * @return o tipo de keyword do token.
      */
     public static KeywordType keyWord(String token) {
+    	
 			if (tokenType(token) == TokenType.KEYWORD) {
 			
-				for (KeywordType k : compiler.JackTokenizer.KeywordType.values()) {
-					return k;
+				switch(token){
+					case "class":
+						return KeywordType.CLASS;
+					case "method":
+						return KeywordType.METHOD;
+					case "function":
+						return KeywordType.FUNCTION;
+					case "constructor":
+						return KeywordType.CONSTRUCTOR;
+					case "int":
+						return KeywordType.INT;
+					case "boolean":
+						return KeywordType.BOOLEAN;
+					case "char":
+						return KeywordType.CHAR;
+					case "void":
+						return KeywordType.VOID;
+					case "var":
+						return KeywordType.VAR;
+					case "static":
+						return KeywordType.STATIC;
+					case "field":
+						return KeywordType.FIELD;
+					case "let":
+						return KeywordType.LET;
+					case "do":
+						return KeywordType.DO;
+					case "if":
+						return KeywordType.IF;
+					case "else":
+						return KeywordType.ELSE;
+					case "while":
+						return KeywordType.WHILE;
+					case "return":
+						return KeywordType.RETURN;
+					case "true":
+						return KeywordType.TRUE;
+					case "false":
+						return KeywordType.FALSE;
+					case "null":
+						return KeywordType.NULL;
+					case "this":
+						return KeywordType.THIS;
         }
-			}
-			else {
-				return null;
 			}
 			return null;
 		}
     
     /**
-     * Retorna o dado como um Character no caso de um toke do tipo SYMBOL.
+     * Retorna o dado como um Character no caso de um token do tipo SYMBOL.
      * Deve ser chamado somente quando o tipo de token for um SYMBOL.
      * @param  command instrução a ser analisada.
      * @return somente o símbolo ou o valor número da instrução.
      */
     public static Character symbol(String token) {
        if (tokenType(token) == TokenType.SYMBOL) {
-        token = token.replace("\"", "");
-        char character = token.charAt(0);
-        return character;
+        //token = token.replace("\"", "");
+        return token.charAt(0);
       }
       else {
         return null;
@@ -285,9 +413,8 @@ public class JackTokenizer {
      */
     public static Integer intVal(String token) {
       if (tokenType(token) == TokenType.INT_CONST) {
-        token = token.replace("\"", "");
-        int integer = Integer.parseInt(token);
-        return integer;
+        //token = token.replace("\"", "");
+        return Integer.parseInt(token);
       }
       else {
         return null;
@@ -303,10 +430,11 @@ public class JackTokenizer {
      */
     public static String stringVal(String token) {
       if (tokenType(token) == TokenType.STRING_CONST) {
-        token = token.replace("\"", "");
+        token = token.substring(1, token.length()-1);
         return token;
       }
       else {
+    	  
         return null;
       }
     }
