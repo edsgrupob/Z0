@@ -6,7 +6,6 @@
 
 package compiler;
 
-import java.awt.print.Printable;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,14 +13,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.concurrent.TimeUnit;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 /**
  * Encapsula o código de leitura. Carrega as instruções na linguagem de máquina virtual a pilha,
@@ -212,15 +206,6 @@ public class JackTokenizer {
     		}
     		newLine=line.toArray(new String[line.size()]);
     	}   	
-    	/*System.out.println(newLine.length);
-    	for(int index=0; index!=newLine.length; ++index){
-    		//System.out.println(newLine[index]);
-    		try{
-    			TimeUnit.SECONDS.sleep(1);
-    		}catch(Exception e){}
-    	}*/
-    	
-    	
     	
 	}
     
@@ -397,7 +382,6 @@ public class JackTokenizer {
      */
     public static Character symbol(String token) {
        if (tokenType(token) == TokenType.SYMBOL) {
-        //token = token.replace("\"", "");
         return token.charAt(0);
       }
       else {
@@ -413,7 +397,6 @@ public class JackTokenizer {
      */
     public static Integer intVal(String token) {
       if (tokenType(token) == TokenType.INT_CONST) {
-        //token = token.replace("\"", "");
         return Integer.parseInt(token);
       }
       else {
